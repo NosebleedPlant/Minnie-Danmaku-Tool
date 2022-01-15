@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Danmaku_Base.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/SystemInfoMonitoring.gd" type="Script" id=3]
+[ext_resource path="res://Scene/Default_Emitter.tscn" type="PackedScene" id=4]
+
+[node name="Danmaku_Base" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="System_Info" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="System_Info"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="System_Info/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 1014.0
+margin_bottom = 590.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="System_Info/MarginContainer/HBoxContainer"]
+margin_right = 88.0
+margin_bottom = 580.0
+alignment = 2
+
+[node name="FPS" type="Label" parent="System_Info/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 531.0
+margin_right = 88.0
+margin_bottom = 545.0
+text = "FPS:"
+
+[node name="Memory" type="Label" parent="System_Info/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 549.0
+margin_right = 88.0
+margin_bottom = 580.0
+text = "Memory_Use:
+"
+
+[node name="Default_Emitter" parent="." instance=ExtResource( 4 )]
+position = Vector2( 545.545, 280.962 )

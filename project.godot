@@ -8,10 +8,55 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "BHBullet",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/BasicBullets/NodeBullet.gd"
+}, {
+"base": "Reference",
+"class": "BHBulletShell",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/Source/BulletShell.gd"
+}, {
+"base": "BHPropertySetter",
+"class": "BHColorProperty",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/UI/PropertySetters/ColorProperty.gd"
+}, {
+"base": "Node",
+"class": "BHPropertySetter",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/UI/PropertySetters/PropertySetter.gd"
+}, {
+"base": "Node2D",
+"class": "BulletHellperPattern",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/Source/BulletPattern.gd"
+}, {
+"base": "MarginContainer",
+"class": "ParameterGroup",
+"language": "GDScript",
+"path": "res://addons/BulletHellper/UI/ParameterContainers/ParameterGroup.gd"
+} ]
+_global_script_class_icons={
+"BHBullet": "",
+"BHBulletShell": "",
+"BHColorProperty": "",
+"BHPropertySetter": "",
+"BulletHellperPattern": "",
+"ParameterGroup": ""
+}
+
 [application]
 
 config/name="Danmaku Base"
+run/main_scene="res://Scene/Danmaku_Base.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+BHPatternManager="*res://addons/BulletHellper/Source/PatternManager.gd"
 
 [physics]
 
