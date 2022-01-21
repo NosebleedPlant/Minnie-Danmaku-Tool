@@ -1,7 +1,10 @@
 extends Node2D
 
 #EDITABLE VALUES
+export var bullet_radius = 0
 export var bullet_acceleration = 100
+#GLOBALS
+var collided = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,3 +20,9 @@ func move(delta):
 	motionVector.x *= cos(self.rotation)*bullet_acceleration
 	motionVector.y *= sin(self.rotation)*bullet_acceleration
 	self.position += motionVector*delta
+
+func collision_detection(playerVec:Vector2):
+	#collsions do not use Area 2D to reduce processing cost if using differently shaped bullet please change this code
+	if(self.position.direction_to(playerVec)<=bullet_radius):
+		collided = true;
+	return

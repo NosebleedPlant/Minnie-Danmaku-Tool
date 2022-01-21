@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Scene/Dummy_Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Danmaku_Base.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/SystemInfoMonitoring.gd" type="Script" id=3]
 [ext_resource path="res://Scene/Default_Emitter.tscn" type="PackedScene" id=4]
@@ -47,3 +48,7 @@ text = "Memory_Use:
 
 [node name="Default_Emitter" parent="." instance=ExtResource( 4 )]
 position = Vector2( 545.545, 280.962 )
+spray_count = 3
+spread_width = 30.0
+
+[node name="Dummy_Player" parent="." instance=ExtResource( 1 )]

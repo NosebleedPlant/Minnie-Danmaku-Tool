@@ -15,6 +15,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	move(delta)
+	return
 	
 # Function that moves the bullet: Default is a straight line
 func move(delta):
@@ -22,7 +23,7 @@ func move(delta):
 	motionVector.x *= cos(self.rotation)*bullet_acceleration
 	motionVector.y *= sin(self.rotation)*bullet_acceleration
 	self.position += motionVector*delta
-	pass
+	return
 "
 
 [node name="Default_Bullet" type="Node2D"]
