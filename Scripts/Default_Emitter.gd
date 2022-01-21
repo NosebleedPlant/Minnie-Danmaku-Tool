@@ -10,6 +10,7 @@ export (float, EXP,-360,360)var rotation_rate = 0#rate of eimiter rotaiotn
 export (Vector2)var bullet_offset#offset from emitter origin
 #-shot params:
 export (float)var spray_cooldown = 1#cooldown between shots
+export var cone_spread_enabled = false
 export var spray_count = 1#bulletcount in a single spray
 export (float)var spread_width=0#spread width between bullets
 export (float, EXP,-360,360)var spread_angle=0 setget set_spread_angle#spread angle between bullets
@@ -22,14 +23,11 @@ export var aim_pause = 0#calls to player position per second
 var parent:Node2D
 var shot_timer = spray_cooldown
 var shoot_period = 0
-var spread_enabled = false
 var player
 var aim_timer = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	parent = self.get_parent()
-	if(spray_count > 1&&spread_angle!=0.0):
-		spread_enabled = true
 	if(playerNodePath):
 		player = get_node(playerNodePath)
 	else:
@@ -96,7 +94,7 @@ func positionBullet(childBullets):
 	return childBullets
 
 func rotateBullet(childBullets):
-	if(spread_enabled):
+	if(cone_spread_enabled):
 		var spread_angle_increment = spread_angle/(spray_count-1)
 		var curr_angle = (spread_angle/2)*-1
 		for bullet in childBullets:
@@ -106,11 +104,6 @@ func rotateBullet(childBullets):
 
 func set_spread_angle(degs):
 	spread_angle = deg2rad(degs)
-	if(spray_count > 1&&spread_angle!=0.0):
-		spread_enabled = true
-	else:
-		spread_enabled = false
-	return
 
 func set_player_path(path):
 	playerNodePath = path

@@ -49,5 +49,6 @@ text = "Memory_Use:
 [node name="Default_Emitter" parent="." instance=ExtResource( 4 )]
 position = Vector2( 537.659, 270.513 )
 playerNodePath = NodePath("../Dummy_Player")
+spray_cooldown = 0.3
 
 [node name="Dummy_Player" parent="." instance=ExtResource( 1 )]
