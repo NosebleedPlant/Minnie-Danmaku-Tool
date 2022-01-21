@@ -16,7 +16,7 @@ export (float, EXP,-360,360)var spread_angle=0 setget set_spread_angle#spread an
 #modulate direction +-
 #modulate speed?
 #aiming params:
-#export (bool)var aiming = false#aiming
+export (bool)var aiming = false#aiming
 #export var aim_offset = 0#offset from player
 #export var aime_delay = 0#delay in player tracking
 #unified bullet params:
@@ -31,6 +31,8 @@ var spread_enabled = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if(spray_count > 1&&spread_angle!=0.0):
+		spread_enabled = true
 	return
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,7 +53,7 @@ func shoot(delta):
 	if(time>=spray_cooldown):
 		childBullets = instance_bullet(childBullets)
 		childBullets = set_bullet_position(childBullets)
-		if(spread_enabled):childBullets = set_bullet_rotation(childBullets)
+		childBullets = set_bullet_rotation(childBullets)
 		for bullet in childBullets:
 			self.get_parent().add_child(bullet)
 			bullet.add_to_group("bullet_pool")
