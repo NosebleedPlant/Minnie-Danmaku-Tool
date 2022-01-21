@@ -47,9 +47,7 @@ text = "Memory_Use:
 "
 
 [node name="Default_Emitter" parent="." instance=ExtResource( 4 )]
-position = Vector2( 545.545, 280.962 )
-rotation_rate = 0.0
-spray_count = 3
-spread_width = 30.0
+position = Vector2( 537.659, 270.513 )
+playerNodePath = NodePath("../Dummy_Player")
 
 [node name="Dummy_Player" parent="." instance=ExtResource( 1 )]
