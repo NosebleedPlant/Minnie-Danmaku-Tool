@@ -4,7 +4,6 @@ extends Node2D
 var _Bullet = preload("res://Scene/Default_Bullet.tscn")
 
 #EDITABLE PARAMETERS:
-export (NodePath)var playerNodePath
 #-transformation params:
 export (float, EXP,-360,360)var rotation_rate = 0#rate of eimiter rotaiotn
 export (Vector2)var bullet_offset#offset from emitter origin
@@ -20,18 +19,15 @@ export (Vector2)var aim_offset#offset from player
 export var aim_pause = 0#calls to player position per second
 
 #GLOBALS
-var parent:Node2D
+var root:Node2D
 var shot_timer = spray_cooldown
 var shoot_period = 0
 var player
 var aim_timer = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	parent = self.get_parent()
-	if(playerNodePath):
-		player = get_node(playerNodePath)
-	else:
-		push_error("Player path required")
+	root = get_tree().get_root().get_node("Danmaku_Base")
+	player = get_node("/root/Danmaku_Base/Dummy_Player")
 	return
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -65,13 +61,13 @@ func shoot(delta):
 		childBullets = positionBullet(childBullets)
 		childBullets = rotateBullet(childBullets)
 		for bullet in childBullets:
-			parent.add_child(bullet)
+			root.add_child(bullet)
 			bullet.add_to_group("bullet_pool")
 		shot_timer = 0
 	return
 
 func bullet_poll(player_position):
-	parent.get_tree().call_group("bullet_pool","set_player_pos",player_position)
+	root.get_tree().call_group("bullet_pool","set_player_pos",player_position)
 
 func instanceBullet(childBullets):
 	for i in spray_count:
@@ -104,7 +100,8 @@ func rotateBullet(childBullets):
 
 func set_spread_angle(degs):
 	spread_angle = deg2rad(degs)
+	return
 
-func set_player_path(path):
-	playerNodePath = path
-	player = get_node(playerNodePath)
+func init(click_coord):
+	position = click_coord
+	return
