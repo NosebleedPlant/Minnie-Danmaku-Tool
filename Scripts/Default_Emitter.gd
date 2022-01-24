@@ -6,7 +6,8 @@ var _Bullet = preload("res://Scene/Default_Bullet.tscn")
 #EDITABLE PARAMETERS:
 #-transformation params:
 export (float, EXP,-360,360)var rotation_rate = 0#rate of eimiter rotaiotn
-export (Vector2)var bullet_offset#offset from emitter origin
+#export (bool)var rotate = false
+#export (Vector2)var bullet_offset#offset from emitter origin
 #-shot params:
 export (float)var spray_cooldown = 1#cooldown between shots
 export var cone_spread_enabled = false
@@ -73,7 +74,7 @@ func instanceBullet(childBullets):
 	for i in spray_count:
 		var bullet = _Bullet.instance()
 		bullet.add_to_group("bullets")
-		bullet.position = self.position+bullet_offset
+		bullet.position = self.position#+bullet_offset
 		bullet.rotation = self.rotation
 		childBullets.append(bullet)
 	return childBullets
