@@ -7,7 +7,7 @@ var _Tab = preload("res://Scene/UI Scenes/EditorTab.tscn")
 
 #GLOBALS
 var root:Node2D
-var editor:Node2D
+var editor:Control
 var emitter_count = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -22,11 +22,11 @@ func _process(delta):
 		var pos = get_global_mouse_position()
 		emitter.init(pos)
 		root.add_child(emitter)
-		if(emitter_count>1):
+		if(emitter_count>=1):
 			var tab = _Tab.instance()
 			editor.get_node("/root/Danmaku_Base/UI/TabContainer").add_child(tab)
 		elif (emitter_count<1):
-			var editor = _Editor.instance()
+			editor = _Editor.instance()
 			var tab = _Tab.instance()
 			root.add_child(editor)
 			editor.get_node("/root/Danmaku_Base/UI/TabContainer").add_child(tab)
