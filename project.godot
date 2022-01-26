@@ -22,8 +22,9 @@ BHPatternManager="*res://addons/BulletHellper/Source/PatternManager.gd"
 
 window/size/width=1920
 window/size/height=1080
+window/size/test_width=960
+window/size/test_height=540
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
 
 [input]
 

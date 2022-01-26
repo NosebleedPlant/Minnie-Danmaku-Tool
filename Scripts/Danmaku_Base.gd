@@ -7,7 +7,7 @@ var _Tab = preload("res://Scene/UI Scenes/EditorTab.tscn")
 
 #GLOBALS
 var root:Node2D
-var editor:Control
+var editor
 var emitter_count = 0
 
 # Called when the node enters the scene tree for the first time.
