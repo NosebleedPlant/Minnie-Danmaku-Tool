@@ -24,12 +24,12 @@ func _process(delta):
 		root.add_child(emitter)
 		if(emitter_count>=1):
 			var tab = _Tab.instance()
+			tab.name = str(emitter_count)
 			editor.get_node("/root/Danmaku_Base/UI/TabContainer").add_child(tab)
 		elif (emitter_count<1):
 			editor = _Editor.instance()
-			var tab = _Tab.instance()
+			editor.get_node("TabContainer/EditorTab").set_emitter(emitter)
 			root.add_child(editor)
-			editor.get_node("/root/Danmaku_Base/UI/TabContainer").add_child(tab)
-			editor.get_node("/root/Danmaku_Base/UI/TabContainer").add_child(tab)
+			editor.get_node("/root/Danmaku_Base/UI/TabContainer/EditorTab").name = str(emitter_count)
 		emitter_count+=1
 	return

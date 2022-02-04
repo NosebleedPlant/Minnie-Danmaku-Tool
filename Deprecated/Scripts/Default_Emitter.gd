@@ -25,6 +25,7 @@ var shot_timer = spray_cooldown
 var shoot_period = 0
 var player
 var aim_timer = 0
+var editor_tab
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	root = get_tree().get_root().get_node("Danmaku_Base")
@@ -34,7 +35,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var player_position = player.position
-	
 	aim(delta,player_position) if aim_enabled else rotate(delta)
 	shoot(delta)
 	bullet_poll(player_position)
@@ -106,3 +106,4 @@ func set_spread_angle(degs):
 func init(click_coord):
 	position = click_coord
 	return
+
