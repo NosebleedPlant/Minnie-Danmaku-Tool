@@ -22,7 +22,6 @@ export var aim_pause = 0#calls to player position per second
 #GLOBALS
 var root:Node2D
 var shot_timer = spray_cooldown
-var shoot_period = 0
 var player
 var aim_timer = 0
 var editor_tab

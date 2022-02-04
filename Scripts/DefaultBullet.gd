@@ -7,8 +7,7 @@ var life_time = 0
 var collided = false
 var player_position
 
-
-
+#_MAIN:
 func _process(delta):
 	move(delta)
 	if(life_span):
@@ -17,6 +16,8 @@ func _process(delta):
 		collision_Detection(player_position)
 	return
 
+
+#_HELPER FUNCTIONS:
 #bullet movement
 #param:delta(time between frames)
 #return: null
@@ -46,8 +47,8 @@ func collision_Detection(playerVec:Vector2):
 		self.queue_free()
 	return
 
-#SETTER GETTERS:
 
+#_SETTER GETTERS:
 #sets the player position
 #param:delta(Vectr2 of player position)
 #return: null
