@@ -1,9 +1,9 @@
 extends Sprite
-#_PRELOADS
+#_PRELOADS:
 var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
-var spray_cooldown = 1						#cooldown between shots
+var spray_cooldown = 0.1						#cooldown between shots
 var rotation_rate = 0						#rate of eimiter rotaiotn
 var spray_count = 1							#bulletcount in a single spray
 #_-spread params
@@ -11,18 +11,20 @@ var cone_spread_enabled = false				#cone spread enabled
 var spread_width=0							#spread width between bullets
 var spread_angle=0 setget set_spread_angle	#spread angle between bullets
 #_-aim params
-var aim_enabled = false						#aiming at player
-var aim_offset								#offset from player
+var aim_enabled = true						#aiming at player
+var aim_offset = Vector2.ZERO				#offset from player
 var aim_pause = 0							#calls to player position per second
 
 #_GLOBALS:
 onready var root = get_tree().get_root()							#for easy access to root
-onready var player = get_tree().get_root()							#for easy access to player node
+onready var player = get_parent().find_node("Player") 							#for easy access to player node
 var shot_timer = spray_cooldown										#timer between shots
 var aim_timer = 0													#delay between re-aim
+var repositioning = false											#indicates if repositioning
 
 #_MAIN:
 func _process(delta):
+	if repositioning: reposition_Emitter(delta)
 # warning-ignore:standalone_ternary
 	aim(delta,player.position) if aim_enabled else rotate(delta)
 	shoot(delta)
@@ -102,6 +104,14 @@ func adjust_Bullet_Trajectory(childBullets):
 			curr_angle+=spread_angle_increment
 	return childBullets
 
+#drag and reposition emitter by lerping to mouse positon at rate of 25*delta
+#param:delta(time between frames)
+#return: null
+func reposition_Emitter(delta):
+	self.position = lerp(self.position,get_global_mouse_position(),25*delta)
+	if Input.is_action_just_released("mouse_left"):
+		repositioning = false
+
 #_SETTER GETTERS:
 #instantites bullet and sets correct positions
 #param:angle
@@ -109,3 +119,13 @@ func adjust_Bullet_Trajectory(childBullets):
 func set_spread_angle(degs):
 	spread_angle = deg2rad(degs)
 	return
+
+#_SYSTEM OVERRIEDS:
+#notifies system that user is repositioning emitter
+#param:viewport,event is the input event,shape_idx is the shape of colider
+#return: null
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if event.is_action_pressed("mouse_left"):
+		repositioning = true
