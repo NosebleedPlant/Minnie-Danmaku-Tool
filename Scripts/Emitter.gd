@@ -25,7 +25,7 @@ var repositioning = false											#indicates if repositioning
 #_MAIN:
 func _process(delta):
 	if repositioning: reposition_Emitter(delta)
-# warning-ignore:standalone_ternary
+	# warning-ignore:standalone_ternary
 	aim(delta,player.position) if aim_enabled else rotate(delta)
 	shoot(delta)
 	return
