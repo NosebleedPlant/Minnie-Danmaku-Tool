@@ -1,9 +1,9 @@
 extends Node2D
 
 #_PRELOADS
-var _Emitter = preload("res://Scenes/Emitter.tscn")
-var _Editor = preload("res://UI/Editor.tscn")
-var _Tab = preload("res://UI/Tab.tscn")
+var _Emitter = preload("res://Scenes/Emitter.tscn")		#emitter
+var _Editor = preload("res://UI/Editor.tscn")			#the editor menu
+var _Tab = preload("res://UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 var emitter_count = 0

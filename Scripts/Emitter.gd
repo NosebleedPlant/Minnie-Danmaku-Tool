@@ -3,17 +3,17 @@ extends Sprite
 var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
-var spray_cooldown = 0.1						#cooldown between shots
+var spray_cooldown = 0						#cooldown between shots
 var rotation_rate = 0						#rate of eimiter rotaiotn
-var spray_count = 1							#bulletcount in a single spray
 #_-spread params
 var cone_spread_enabled = false				#cone spread enabled
-var spread_width=0							#spread width between bullets
+var spray_count = 0							#bulletcount in a single spray
 var spread_angle=0 setget set_spread_angle	#spread angle between bullets
+var spread_width=0							#spread width between bullets
 #_-aim params
-var aim_enabled = true						#aiming at player
-var aim_offset = Vector2.ZERO				#offset from player
+var aim_enabled = false						#aiming at player
 var aim_pause = 0							#calls to player position per second
+var aim_offset = Vector2.ZERO				#offset from player
 
 #_GLOBALS:
 onready var root = get_tree().get_root()							#for easy access to root
@@ -24,6 +24,7 @@ var repositioning = false											#indicates if repositioning
 
 #_MAIN:
 func _process(delta):
+	print(spray_cooldown)
 	if repositioning: reposition_Emitter(delta)
 	# warning-ignore:standalone_ternary
 	aim(delta,player.position) if aim_enabled else rotate(delta)

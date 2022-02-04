@@ -1,16 +1,16 @@
 extends Sprite
 #_EDITABLE PARAMS
-var bullet_radius = 10
-var bullet_speed = 100
-var life_span = null
-var life_time = 0
-var collided = false
-var player_position
+var bullet_radius = 10			#radius of bullet hitbox
+var bullet_speed = 100			#speed of bullet
+var bullet_life_span = null		#life span of a single bullet
+var life_time = 0				#how long this bullet has been alive
+var collided = false			#has a collision happened
+var player_position				#players current position
 
 #_MAIN:
 func _process(delta):
 	move(delta)
-	if(life_span):
+	if(bullet_life_span):
 		age(delta)
 	if(player_position):
 		collision_Detection(player_position)
@@ -33,7 +33,7 @@ func move(delta):
 #return: null
 func age(delta):
 	life_time+=delta
-	if(life_time>=life_span):
+	if(life_time>=bullet_life_span):
 		self.queue_free()
 	return
 
@@ -47,10 +47,10 @@ func collision_Detection(playerVec:Vector2):
 		self.queue_free()
 	return
 
-
 #_SETTER GETTERS:
 #sets the player position
 #param:delta(Vectr2 of player position)
 #return: null
 func _setPlayerPosition(playerVec:Vector2):
 	player_position = playerVec
+
