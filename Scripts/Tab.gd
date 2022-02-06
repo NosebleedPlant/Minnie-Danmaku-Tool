@@ -60,3 +60,7 @@ func _on_set_XOff(value):
 
 func _on_set_YOff(value):
 	connectedEmitter.aim_offset.y = value
+
+
+func _on_Save_pressed():
+	connectedEmitter.save()

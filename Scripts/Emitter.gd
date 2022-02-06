@@ -3,11 +3,12 @@ extends Sprite
 var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
-var spray_cooldown = 0						#cooldown between shots
+var save_adress = "res://Saves/emitter.txt"
+var spray_cooldown = 0.5					#cooldown between shots
 var rotation_rate = 0						#rate of eimiter rotaiotn
 #_-spread params
 var cone_spread_enabled = false				#cone spread enabled
-var spray_count = 0							#bulletcount in a single spray
+var spray_count = 1							#bulletcount in a single spray
 var spread_angle=0 setget set_spread_angle	#spread angle between bullets
 var spread_width=0							#spread width between bullets
 #_-aim params
@@ -112,6 +113,15 @@ func reposition_Emitter(delta):
 	self.position = lerp(self.position,get_global_mouse_position(),25*delta)
 	if Input.is_action_just_released("mouse_left"):
 		repositioning = false
+
+func save():
+	var file = File.new()
+	file.open(save_adress, File.WRITE)
+	file.store_var(spray_cooldown)
+	file.close()
+
+func load_Emitter():
+	pass
 
 #_SETTER GETTERS:
 #instantites bullet and sets correct positions

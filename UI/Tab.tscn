@@ -96,6 +96,7 @@ margin_top = 56.0
 margin_right = 271.0
 margin_bottom = 80.0
 step = 0.01
+value = 0.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,6 +133,7 @@ margin_left = 138.0
 margin_top = 128.0
 margin_right = 271.0
 margin_bottom = 152.0
+value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -274,6 +276,66 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Bullet" type="Label" parent="Menu"]
+margin_top = 345.0
+margin_right = 134.0
+margin_bottom = 359.0
+text = "Bullet"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bullet_Adress" type="LineEdit" parent="Menu"]
+margin_left = 138.0
+margin_top = 340.0
+margin_right = 271.0
+margin_bottom = 364.0
+text = "Bullet Adress"
+
+[node name="Save_Adress" type="Label" parent="Menu"]
+margin_top = 373.0
+margin_right = 134.0
+margin_bottom = 387.0
+text = "Save Location"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save_Input" type="LineEdit" parent="Menu"]
+margin_left = 138.0
+margin_top = 368.0
+margin_right = 271.0
+margin_bottom = 392.0
+text = "Adress"
+
+[node name="LoadBullet" type="Button" parent="."]
+margin_top = 444.539
+margin_right = 146.0
+margin_bottom = 464.539
+text = "Load Existing Emitter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadExisting" type="Button" parent="."]
+margin_top = 412.0
+margin_right = 146.0
+margin_bottom = 432.0
+text = "Load Bullet"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="."]
+margin_left = 176.201
+margin_top = 444.539
+margin_right = 268.201
+margin_bottom = 464.539
+text = "Save Current"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="value_changed" from="Menu/HBoxContainer3/X_Input" to="." method="_on_set_X"]
 [connection signal="value_changed" from="Menu/HBoxContainer4/Y_Input" to="." method="_on_set_Y"]
 [connection signal="value_changed" from="Menu/SprayCooldown_Input" to="." method="_on_set_SprayCooldown"]
@@ -286,3 +348,4 @@ __meta__ = {
 [connection signal="value_changed" from="Menu/Aim_Cooldown_Input" to="." method="_on_set_AimCooldown"]
 [connection signal="value_changed" from="Menu/HBoxContainer/Xoffset_Input" to="." method="_on_set_XOff"]
 [connection signal="value_changed" from="Menu/HBoxContainer2/Yoffset_Input" to="." method="_on_set_YOff"]
+[connection signal="pressed" from="Save" to="." method="_on_Save_pressed"]
