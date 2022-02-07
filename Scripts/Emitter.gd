@@ -21,12 +21,13 @@ onready var root = get_tree().get_root()							#for easy access to root
 onready var player = get_parent().find_node("Player") 							#for easy access to player node
 var shot_timer = spray_cooldown										#timer between shots
 var aim_timer = 0													#delay between re-aim
-var repositioning = false											#indicates if repositioning
+var repositioning_emitter = false											#indicates if repositioning
+var rotating_emitter = false												#indicates if adjusting rotate
 
 #_MAIN:
 func _process(delta):
-	print(spray_cooldown)
-	if repositioning: reposition_Emitter(delta)
+	if repositioning_emitter: reposition_Emitter(delta)
+	if rotating_emitter: rotate_Emitter()
 	# warning-ignore:standalone_ternary
 	aim(delta,player.position) if aim_enabled else rotate(delta)
 	shoot(delta)
@@ -36,6 +37,7 @@ func _process(delta):
 #aims at player
 #param:delta(time between frames), player position vector
 #return: null
+#@TODO: aim offset not functioning correctly
 func aim(delta,player_position):
 	aim_timer += delta
 	if(aim_timer>=aim_pause):
@@ -75,7 +77,7 @@ func instance_Bullet(childBullets):
 	for i in spray_count:
 		var bullet = _Bullet.instance()
 		bullet.add_to_group("bullets")
-		bullet.position = self.position#+bullet_offset
+		bullet.position = self.position
 		bullet.rotation = self.rotation
 		childBullets.append(bullet)
 	return childBullets
@@ -112,14 +114,26 @@ func adjust_Bullet_Trajectory(childBullets):
 func reposition_Emitter(delta):
 	self.position = lerp(self.position,get_global_mouse_position(),25*delta)
 	if Input.is_action_just_released("mouse_left"):
-		repositioning = false
+		repositioning_emitter = false
 
+#adjust rotation of emitter to look at mouse location
+#param:delta(time between frames)
+#return: null
+func rotate_Emitter():
+	look_at(get_global_mouse_position())
+	if Input.is_action_just_released("rotate"):
+		rotating_emitter = false
+
+#save the params for emitter
+#return: null
 func save():
 	var file = File.new()
 	file.open(save_adress, File.WRITE)
 	file.store_var(spray_cooldown)
 	file.close()
 
+#load the params for emitter
+#return: null
 func load_Emitter():
 	pass
 
@@ -132,11 +146,20 @@ func set_spread_angle(degs):
 	return
 
 #_SYSTEM OVERRIEDS:
-#notifies system that user is repositioning emitter
+#initalization function sets starting vals
+func init(pos,name_str):
+	self.position = pos
+	self.name = name_str
+
+#notifies system that user is repositioning emitter or rotating emitter based on input
 #param:viewport,event is the input event,shape_idx is the shape of colider
 #return: null
 # warning-ignore:unused_argument
 # warning-ignore:unused_argument
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event.is_action_pressed("mouse_left"):
-		repositioning = true
+		repositioning_emitter = true
+	if event.is_action_pressed("mouse_left") and Input.is_action_pressed("rotate"):
+		repositioning_emitter = false
+		rotating_emitter = true
+	return

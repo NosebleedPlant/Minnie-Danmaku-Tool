@@ -14,20 +14,19 @@ func _process(delta):
 	if Input.is_action_just_pressed("mouse_right"):
 		#create new emitter at location of right click
 		var emitter = _Emitter.instance()
-		emitter.position = get_global_mouse_position()#set position of emitter to click location
-		self.add_child(emitter)
 		emitter_count+=1
+		emitter.position = get_global_mouse_position()#set position of emitter to click location
+		emitter.init(get_global_mouse_position(),"Default_Emitter_"+str(emitter_count))
+		self.add_child(emitter)
 		
 		#create tabs in editor for each new emitter spawned
 		if(emitter_count==1):#first emitter create both editor and tab
 			editor = _Editor.instance()
 			var tab = editor.get_node("Editor/Tab")
 			self.add_child(editor)
-			tab.set_emitter(emitter)
-			tab.name = str(emitter_count)
+			tab.init(emitter)
 		elif(emitter_count>1):#after that just create tab
 			var tab = _Tab.instance()
 			editor.get_node("Editor").add_child(tab)
-			tab.set_emitter(emitter)
-			tab.name = str(emitter_count)
+			tab.init(emitter)
 	return

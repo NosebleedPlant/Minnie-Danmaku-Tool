@@ -81,10 +81,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SprayCooldown" type="Label" parent="Menu"]
+[node name="Rotation" type="Label" parent="Menu"]
 margin_top = 61.0
 margin_right = 134.0
 margin_bottom = 75.0
+text = "Angle"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rotation_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 56.0
+margin_right = 271.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SprayCooldown" type="Label" parent="Menu"]
+margin_top = 89.0
+margin_right = 134.0
+margin_bottom = 103.0
 text = "Spray Cooldown "
 __meta__ = {
 "_edit_use_anchors_": false
@@ -92,9 +110,9 @@ __meta__ = {
 
 [node name="SprayCooldown_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
-margin_top = 56.0
+margin_top = 84.0
 margin_right = 271.0
-margin_bottom = 80.0
+margin_bottom = 108.0
 step = 0.01
 value = 0.5
 __meta__ = {
@@ -102,9 +120,9 @@ __meta__ = {
 }
 
 [node name="Spread" type="Label" parent="Menu"]
-margin_top = 97.0
+margin_top = 125.0
 margin_right = 134.0
-margin_bottom = 111.0
+margin_bottom = 139.0
 text = "Cone Spread"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -112,17 +130,17 @@ __meta__ = {
 
 [node name="Spread_Input" type="CheckButton" parent="Menu"]
 margin_left = 138.0
-margin_top = 84.0
+margin_top = 112.0
 margin_right = 271.0
-margin_bottom = 124.0
+margin_bottom = 152.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SprayCount" type="Label" parent="Menu"]
-margin_top = 133.0
+margin_top = 161.0
 margin_right = 134.0
-margin_bottom = 147.0
+margin_bottom = 175.0
 text = "Spray Count"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -130,42 +148,24 @@ __meta__ = {
 
 [node name="SprayCount_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
-margin_top = 128.0
+margin_top = 156.0
 margin_right = 271.0
-margin_bottom = 152.0
+margin_bottom = 180.0
 value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ConeAngle" type="Label" parent="Menu"]
-margin_top = 161.0
+margin_top = 189.0
 margin_right = 134.0
-margin_bottom = 175.0
+margin_bottom = 203.0
 text = "Cone Angle"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ConeAngle_Input" type="SpinBox" parent="Menu"]
-margin_left = 138.0
-margin_top = 156.0
-margin_right = 271.0
-margin_bottom = 180.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SpreadWidth" type="Label" parent="Menu"]
-margin_top = 189.0
-margin_right = 134.0
-margin_bottom = 203.0
-text = "Spray Width"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SpreadWidth_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
 margin_top = 184.0
 margin_right = 271.0
@@ -174,16 +174,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Rotation_Rate" type="Label" parent="Menu"]
+[node name="SpreadWidth" type="Label" parent="Menu"]
 margin_top = 217.0
 margin_right = 134.0
 margin_bottom = 231.0
-text = "Rotation Rate"
+text = "Spray Width"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Rotation_Rate_Input" type="SpinBox" parent="Menu"]
+[node name="SpreadWidth_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
 margin_top = 212.0
 margin_right = 271.0
@@ -192,10 +192,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Aim" type="Label" parent="Menu"]
-margin_top = 253.0
+[node name="Rotation_Rate" type="Label" parent="Menu"]
+margin_top = 245.0
 margin_right = 134.0
-margin_bottom = 267.0
+margin_bottom = 259.0
+text = "Rotation Rate"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rotation_Rate_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 240.0
+margin_right = 271.0
+margin_bottom = 264.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Aim" type="Label" parent="Menu"]
+margin_top = 281.0
+margin_right = 134.0
+margin_bottom = 295.0
 text = "Aim"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -203,17 +221,17 @@ __meta__ = {
 
 [node name="Aim_Input" type="CheckButton" parent="Menu"]
 margin_left = 138.0
-margin_top = 240.0
+margin_top = 268.0
 margin_right = 271.0
-margin_bottom = 280.0
+margin_bottom = 308.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Aim_Cooldown" type="Label" parent="Menu"]
-margin_top = 289.0
+margin_top = 317.0
 margin_right = 134.0
-margin_bottom = 303.0
+margin_bottom = 331.0
 text = "Aim Cooldown"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -221,17 +239,17 @@ __meta__ = {
 
 [node name="Aim_Cooldown_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
-margin_top = 284.0
+margin_top = 312.0
 margin_right = 271.0
-margin_bottom = 308.0
+margin_bottom = 336.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
-margin_top = 312.0
+margin_top = 340.0
 margin_right = 134.0
-margin_bottom = 336.0
+margin_bottom = 364.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -255,9 +273,9 @@ __meta__ = {
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Menu"]
 margin_left = 138.0
-margin_top = 312.0
+margin_top = 340.0
 margin_right = 271.0
-margin_bottom = 336.0
+margin_bottom = 364.0
 
 [node name="Y_Offset" type="Label" parent="Menu/HBoxContainer2"]
 margin_top = 5.0
@@ -277,9 +295,9 @@ __meta__ = {
 }
 
 [node name="Bullet" type="Label" parent="Menu"]
-margin_top = 345.0
+margin_top = 373.0
 margin_right = 134.0
-margin_bottom = 359.0
+margin_bottom = 387.0
 text = "Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -287,15 +305,15 @@ __meta__ = {
 
 [node name="Bullet_Adress" type="LineEdit" parent="Menu"]
 margin_left = 138.0
-margin_top = 340.0
+margin_top = 368.0
 margin_right = 271.0
-margin_bottom = 364.0
+margin_bottom = 392.0
 text = "Bullet Adress"
 
 [node name="Save_Adress" type="Label" parent="Menu"]
-margin_top = 373.0
+margin_top = 401.0
 margin_right = 134.0
-margin_bottom = 387.0
+margin_bottom = 415.0
 text = "Save Location"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -303,24 +321,24 @@ __meta__ = {
 
 [node name="Save_Input" type="LineEdit" parent="Menu"]
 margin_left = 138.0
-margin_top = 368.0
+margin_top = 396.0
 margin_right = 271.0
-margin_bottom = 392.0
+margin_bottom = 420.0
 text = "Adress"
 
 [node name="LoadBullet" type="Button" parent="."]
-margin_top = 444.539
+margin_top = 470.024
 margin_right = 146.0
-margin_bottom = 464.539
+margin_bottom = 490.024
 text = "Load Existing Emitter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadExisting" type="Button" parent="."]
-margin_top = 412.0
+margin_top = 437.485
 margin_right = 146.0
-margin_bottom = 432.0
+margin_bottom = 457.485
 text = "Load Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -328,9 +346,9 @@ __meta__ = {
 
 [node name="Save" type="Button" parent="."]
 margin_left = 176.201
-margin_top = 444.539
+margin_top = 470.024
 margin_right = 268.201
-margin_bottom = 464.539
+margin_bottom = 490.024
 text = "Save Current"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -338,6 +356,7 @@ __meta__ = {
 
 [connection signal="value_changed" from="Menu/HBoxContainer3/X_Input" to="." method="_on_set_X"]
 [connection signal="value_changed" from="Menu/HBoxContainer4/Y_Input" to="." method="_on_set_Y"]
+[connection signal="value_changed" from="Menu/Rotation_Input" to="." method="_on_set_Angle"]
 [connection signal="value_changed" from="Menu/SprayCooldown_Input" to="." method="_on_set_SprayCooldown"]
 [connection signal="toggled" from="Menu/Spread_Input" to="." method="_on_SpreadEnabled"]
 [connection signal="value_changed" from="Menu/SprayCount_Input" to="." method="_on_set_SprayCount"]
