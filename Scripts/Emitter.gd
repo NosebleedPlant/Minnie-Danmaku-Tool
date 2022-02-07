@@ -1,9 +1,9 @@
 extends Sprite
 #_PRELOADS:
+var bullet_adress = "res://Scenes/Provided Bullets/Bullet.tscn"
 var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
-var save_adress = "res://Saves/emitter.txt"
 var spray_cooldown = 0.5					#cooldown between shots
 var rotation_rate = 0						#rate of eimiter rotaiotn
 #_-spread params
@@ -126,16 +126,43 @@ func rotate_Emitter():
 
 #save the params for emitter
 #return: null
-func save():
+func save(path):
 	var file = File.new()
-	file.open(save_adress, File.WRITE)
+#	file.open(path+self.name+".save", File.WRITE)
+	file.open(path, File.WRITE)
+	file.store_var(position)
+	file.store_var(rotation)
+	file.store_var(bullet_adress)
 	file.store_var(spray_cooldown)
+	file.store_var(rotation_rate)
+	file.store_var(cone_spread_enabled)
+	file.store_var(spray_count)
+	file.store_var(spread_angle)
+	file.store_var(spread_width)
+	file.store_var(aim_enabled)
+	file.store_var(aim_pause)
+	file.store_var(aim_offset)
 	file.close()
 
 #load the params for emitter
 #return: null
-func load_Emitter():
-	pass
+func load_Emitter(file_name):
+	var file = File.new()
+	if file.file_exists(file_name):
+		file.open(file_name, File.READ)
+		position = file.get_var()
+		rotation = file.get_var()
+		bullet_adress = file.get_var()
+		spray_cooldown = file.get_var()
+		rotation_rate = file.get_var()
+		cone_spread_enabled = file.get_var()
+		spray_count = file.get_var()
+		spread_angle = file.get_var()
+		spread_width = file.get_var()
+		aim_enabled = file.get_var()
+		aim_pause = file.get_var()
+		aim_offset = file.get_var()
+		file.close()
 
 #_SETTER GETTERS:
 #instantites bullet and sets correct positions

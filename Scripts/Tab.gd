@@ -1,4 +1,5 @@
 extends Tabs
+
 #_GLOBALS:
 var connectedEmitter	#emitter that thsi tab is responsible for
 var player_pos			#player position entered last
@@ -89,10 +90,18 @@ func _on_set_XOff(value):
 func _on_set_YOff(value):
 	connectedEmitter.aim_offset.y = value
 
-func _on_Save_pressed():
-	connectedEmitter.save()
-
 func _on_Load_emitter():
-	#load data into feilds here
-	#load data into emitter
-	pass
+	get_node("LoadWarning").popup_centered()
+
+func _on_acceptLoadWarning():
+	get_node("LoadDialog").popup_centered()
+
+func _on_emtterSelected(path):
+	connectedEmitter.load_Emitter(path)
+
+func _on_SaveEmitter():
+	get_node("SaveDialog").popup_centered()
+
+func _on_savePathSelected(path):
+	connectedEmitter.save(path)
+

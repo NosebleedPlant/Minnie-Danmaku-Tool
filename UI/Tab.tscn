@@ -5,6 +5,7 @@
 [node name="Tab" type="Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+rect_pivot_offset = Vector2( -47.3864, 72.3574 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -294,65 +295,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bullet" type="Label" parent="Menu"]
-margin_top = 373.0
-margin_right = 134.0
-margin_bottom = 387.0
-text = "Bullet"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Bullet_Adress" type="LineEdit" parent="Menu"]
-margin_left = 138.0
-margin_top = 368.0
-margin_right = 271.0
-margin_bottom = 392.0
-text = "Bullet Adress"
-
-[node name="Save_Adress" type="Label" parent="Menu"]
-margin_top = 401.0
-margin_right = 134.0
-margin_bottom = 415.0
-text = "Save Location"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Save_Input" type="LineEdit" parent="Menu"]
-margin_left = 138.0
-margin_top = 396.0
-margin_right = 271.0
-margin_bottom = 420.0
-text = "Adress"
-
 [node name="LoadBullet" type="Button" parent="."]
-margin_top = 470.024
+margin_top = 404.637
 margin_right = 146.0
-margin_bottom = 490.024
-text = "Load Existing Emitter"
+margin_bottom = 424.637
+text = "Load Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadExisting" type="Button" parent="."]
-margin_top = 437.485
+margin_top = 437.176
 margin_right = 146.0
-margin_bottom = 457.485
-text = "Load Bullet"
+margin_bottom = 457.176
+text = "Load Existing Emitter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Save" type="Button" parent="."]
 margin_left = 176.201
-margin_top = 470.024
+margin_top = 437.176
 margin_right = 268.201
-margin_bottom = 490.024
+margin_bottom = 457.176
 text = "Save Current"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LoadDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 217.0
+window_title = "Open a File"
+mode = 0
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+margin_right = 315.0
+margin_bottom = 217.0
+
+[node name="LoadWarning" type="AcceptDialog" parent="."]
+margin_right = 201.0
+margin_bottom = 58.0
+dialog_text = "Unsaved changes will be lost"
 
 [connection signal="value_changed" from="Menu/HBoxContainer3/X_Input" to="." method="_on_set_X"]
 [connection signal="value_changed" from="Menu/HBoxContainer4/Y_Input" to="." method="_on_set_Y"]
@@ -367,4 +351,8 @@ __meta__ = {
 [connection signal="value_changed" from="Menu/Aim_Cooldown_Input" to="." method="_on_set_AimCooldown"]
 [connection signal="value_changed" from="Menu/HBoxContainer/Xoffset_Input" to="." method="_on_set_XOff"]
 [connection signal="value_changed" from="Menu/HBoxContainer2/Yoffset_Input" to="." method="_on_set_YOff"]
-[connection signal="pressed" from="Save" to="." method="_on_Save_pressed"]
+[connection signal="pressed" from="LoadExisting" to="." method="_on_Load_emitter"]
+[connection signal="pressed" from="Save" to="." method="_on_SaveEmitter"]
+[connection signal="file_selected" from="LoadDialog" to="." method="_on_emtterSelected"]
+[connection signal="file_selected" from="SaveDialog" to="." method="_on_savePathSelected"]
+[connection signal="confirmed" from="LoadWarning" to="." method="_on_acceptLoadWarning"]
