@@ -1,14 +1,14 @@
 # Mini-Danmaku-Tool
-A bullethell pattern making tool for the godot game engine. The goal is to setup a system that allows designers to rapidly prototype bullethell patterns that they can then drop into levels for testing. The tool does not aim to include the ability to design movement patterns for the emitters for now in the interset of keeping the scope manageable for a 1-person project.
+**Description:**
 
-Currently Under Construction.
+A bullethell pattern making tool for the godot game engine. The goal is to setup a system that allows designers to rapidly prototype bullethell patterns that they can then drop into levels for testing. The tool does not aim to include the ability to design movement patterns for the emitters or design generators for now in the interset of keeping the scope manageable for a 1-person project.
 
-Heres what I have at the moment:
+**Heres what I have at the moment:**
+
+https://user-images.githubusercontent.com/42461443/153335317-6003f79d-d478-4c0b-aec0-d015522cc11d.mp4
 
 
-Major Tasks Left:
-
-| Task |
+| **Major Tasks Left** |
 | ------------- |
 | Refactor the Emitter scene to better conform to MVC pattern|
 | Delete emitters while editing  |
@@ -17,12 +17,4 @@ Major Tasks Left:
 | Setup system for transffering patterns out of plugin  |
 | Implmentation of multiple bullet arrays  |
 | Turn the whole thing into an addon instead of a project  |
-
-Streatch:
-
-| Task |
-| ------------- |
-| Generator Editing Mode  |
-| Ability to edit movement patterns of the emitters |
-
 
