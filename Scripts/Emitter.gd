@@ -19,9 +19,9 @@ var aim_enabled = false						#aiming at player
 var aim_pause = 0							#calls to player position per second
 var aim_offset = Vector2.ZERO				#offset from player
 
+
 #_GLOBALS:
-#
-onready var root = get_tree().get_root()				#for easy access to root
+onready var root = get_tree().get_root().get_child(0)				#for easy access to root
 onready var player = get_parent().find_node("Player") 	#for easy access to player node
 var shot_timer = spray_cooldown							#timer between shots
 var aim_timer = 0										#delay between re-aim
@@ -160,3 +160,8 @@ func load_Emitter(file_name):
 		aim_offset = file.get_var()
 		file.close()
 	return
+
+#_SIGNAL EVENTS:
+#
+func on_Input_Event(viewport, event, shape_idx):
+	root.adjustment_Input(self,event)
