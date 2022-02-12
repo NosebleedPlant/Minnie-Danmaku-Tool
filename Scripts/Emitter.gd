@@ -1,4 +1,5 @@
 extends Sprite
+
 #_PRELOADS:
 #
 var bullet_adress = "res://Scenes/Provided Bullets/Bullet.tscn"
@@ -38,6 +39,8 @@ func _process(delta):
 #_HELPER FUNCTIONS:
 #
 #initalization function sets starting vals
+#param:spawn position, name of eitter
+#return: null
 func init(pos,name_str):
 	self.position = pos
 	self.name = name_str
@@ -74,7 +77,6 @@ func shoot(delta):
 		childBullets = rotate_Bullet(childBullets)
 		for bullet in childBullets:
 			root.add_child(bullet)
-			bullet.add_to_group("bullet_pool")
 		shot_timer = 0
 	return
 
@@ -84,7 +86,6 @@ func shoot(delta):
 func instance_Bullet(childBullets):
 	for i in spray_count:
 		var bullet = _Bullet.instance()
-		bullet.add_to_group("bullets")
 		bullet.position = self.position
 		bullet.rotation = self.rotation
 		childBullets.append(bullet)
@@ -115,3 +116,47 @@ func rotate_Bullet(childBullets):
 			bullet.rotation += curr_angle
 			curr_angle+=spread_angle_increment
 	return childBullets
+
+#save the params for emitter
+#param:save file name
+#return: null
+func save(file_name):
+	var file = File.new()
+	if file.file_exists(file_name):
+		file.open(file_name, File.WRITE)
+		file.store_var(position)
+		file.store_var(rotation)
+		file.store_var(bullet_adress)
+		file.store_var(spray_cooldown)
+		file.store_var(rotation_rate)
+		file.store_var(cone_spread_enabled)
+		file.store_var(spray_count)
+		file.store_var(spread_angle)
+		file.store_var(spread_width)
+		file.store_var(aim_enabled)
+		file.store_var(aim_pause)
+		file.store_var(aim_offset)
+		file.close()
+	return
+
+#load the params for emitter
+#param:save file name
+#return: null
+func load_Emitter(file_name):
+	var file = File.new()
+	if file.file_exists(file_name):
+		file.open(file_name, File.READ)
+		position = file.get_var()
+		rotation = file.get_var()
+		bullet_adress = file.get_var()
+		spray_cooldown = file.get_var()
+		rotation_rate = file.get_var()
+		cone_spread_enabled = file.get_var()
+		spray_count = file.get_var()
+		spread_angle = file.get_var()
+		spread_width = file.get_var()
+		aim_enabled = file.get_var()
+		aim_pause = file.get_var()
+		aim_offset = file.get_var()
+		file.close()
+	return
