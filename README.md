@@ -12,11 +12,11 @@ https://user-images.githubusercontent.com/42461443/153335317-6003f79d-d478-4c0b-
 
 | **Major Tasks Left** |
 | ------------- |
-| Refactor the Emitter scene to better conform to MVC pattern|
 | Delete emitters while editing  |
 | Loading in an existing emitter does not update the fields in the editor  |
 | Warnings for invalid input  |
 | Setup system for transffering patterns out of plugin  |
 | Implmentation of multiple bullet arrays  |
 | Turn the whole thing into an addon instead of a project  |
+| Documentation in serachable pdf form  |
 
