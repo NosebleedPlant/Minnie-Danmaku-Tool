@@ -7,26 +7,27 @@ var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
 #
-var spray_cooldown = 0.5					#cooldown between shots
-var rotation_rate = 0						#rate of eimiter rotaiotn
+var spray_cooldown = 0.5			#cooldown between shots
+var rotation_rate = 0				#rate of eimiter rotaiotn
 #_-spread params
-var cone_spread_enabled = false				#cone spread enabled
-var spray_count = 1							#bulletcount in a single spray
-var spread_angle=0							#spread angle between bullets
-var spread_width=0							#spread width between bullets
+var cone_spread_enabled = false		#cone spread enabled
+var spray_count = 1					#bulletcount in a single spray
+var spread_angle=0					#spread angle between bullets
+var spread_width=0					#spread width between bullets
 #_-aim params
-var aim_enabled = false						#aiming at player
-var aim_pause = 0							#calls to player position per second
-var aim_offset = Vector2.ZERO				#offset from player
+var aim_enabled = false				#aiming at player
+var aim_pause = 0					#calls to player position per second
+var aim_offset = Vector2.ZERO		#offset from player
 
 
 #_GLOBALS:
-onready var root = get_tree().get_root().get_child(0)				#for easy access to root
-onready var player = get_parent().find_node("Player") 	#for easy access to player node
-var shot_timer = spray_cooldown							#timer between shots
-var aim_timer = 0										#delay between re-aim
-var repositioning_emitter = false						#indicates if repositioning
-var rotating_emitter = false							#indicates if adjusting rotate
+#
+onready var controler = get_tree().get_root().get_child(0)	#for easy access to root
+onready var player = get_parent().find_node("Player") 		#for easy access to player node
+var shot_timer = spray_cooldown								#timer between shots
+var aim_timer = 0											#delay between re-aim
+var repositioning_emitter = false							#indicates if repositioning
+var rotating_emitter = false								#indicates if adjusting rotate
 
 #_MAIN:
 #
@@ -76,7 +77,7 @@ func shoot(delta):
 		childBullets = position_Bullet(childBullets)
 		childBullets = rotate_Bullet(childBullets)
 		for bullet in childBullets:
-			root.add_child(bullet)
+			controler.add_child(bullet)
 		shot_timer = 0
 	return
 
@@ -163,5 +164,9 @@ func load_Emitter(file_name):
 
 #_SIGNAL EVENTS:
 #
+#on input it calls the input handler from root
+#param: viewport of game, input event, shape
+#return null
 func on_Input_Event(viewport, event, shape_idx):
-	root.adjustment_Input(self,event)
+	controler.adjustment_Input(self,event)
+	return

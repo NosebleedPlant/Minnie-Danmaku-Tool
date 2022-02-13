@@ -8,19 +8,19 @@ var _Tab = preload("res://UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
-var tab_emitter_map = {}
-var emitter_count = 0
-onready var editor = find_node("UI")
-var repositioning_emitter = false						#indicates if repositioning
-var rotating_emitter = false							#indicates if adjusting rotate
+var tab_emitter_map = {}				#maps every tab to an emitter
+var emitter_count = 0					#count of created emitters
+onready var editor = find_node("UI")	#easy access to editor ui node
+var repositioning_emitter = false		#indicates if repositioning
+var rotating_emitter = false			#indicates if adjusting rotate
 var emitter_editing:Node2D
 
 #_MAIN: 
 #
-#handles user input
+# handles user input
 # warning-ignore:unused_argument
-#param: delta(time between frames)
-#return: enull
+# param: delta(time between frames)
+# return: enull
 func _process(delta):
 	if Input.is_action_just_pressed("mouse_left"):
 		var emitter = spawn_Emitter()#create new emitter at location of right click
@@ -28,6 +28,7 @@ func _process(delta):
 	if repositioning_emitter: reposition_Emitter(delta)
 	if rotating_emitter: rotate_Emitter()
 	return
+
 
 #_HELPER FUNCTIONS:
 #
@@ -54,11 +55,9 @@ func spawn_Editior(emitter):
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
 	return tab
 
-#notifies system that user is repositioning emitter or rotating emitter based on input
-#param:viewport,event is the input event,shape_idx is the shape of colider
+#handles user input for adjusting an emitter directly
+#param:emitter that is being adjusted, the input event
 #return: null
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
 func adjustment_Input(emitter,event):
 	if event.is_action_pressed("mouse_right"):
 		repositioning_emitter = true
@@ -84,51 +83,119 @@ func rotate_Emitter():
 	if Input.is_action_just_released("rotate"):
 		rotating_emitter = false
 
-#@TODO: adjust position and rotation with editor not directly
+#_UPDATE VIEW:
+#
+#checks to see if the associated emitter of a tab has been changed directly and 
+#reflects the changes to tab if it has
+#param: tab
+#return: null
+func update_Tab(tab):
+	var emitter_position = tab_emitter_map[tab].position
+	if(tab.get_position_field()!=emitter_position):
+		tab.set_position_field(emitter_position)
+
+	var emitter_rotation = tab_emitter_map[tab].rotation
+	if(tab.get_rotation_field()!=emitter_rotation):
+		tab.set_rotation_field(emitter_rotation)
+	return
+
+#_UPDATE MODEL:
+#
+#function to update the x cooridnate of emitter
+#params: tab that was updated and new value
+#return: null
 func update_XCoord(tab,x):
 	tab_emitter_map[tab].position.x = x
 
+#function to update the y cooridnate of emitter
+#params: tab that was updated and new value
+#return: null
 func update_YCoord(tab,y):
 	tab_emitter_map[tab].position.y = y
 
+#function to update the angle of emitter
+#params: tab that was updated and new value
+#return: null
 func update_Angle(tab,deg):
 	tab_emitter_map[tab].set_rotation(deg2rad(deg))
 
+#function to update the spray cooldown of emitter
+#params: tab that was updated and new value
+#return: null
 func update_SprayCooldown(tab,value):
 	tab_emitter_map[tab].spray_cooldown = value
 
-func _on_SpreadEnabled(tab,button_pressed):
+#function to update the spread status of emitter
+#params: tab that was updated and new value
+#return: null
+func update_SpreadEnabled(tab,button_pressed):
 	if(tab_emitter_map[tab].spray_count <=1):
 		tab.get_node("Menu/Spread_Input").pressed = false
 		#@todo: pop-up warning
 		return
 	tab_emitter_map[tab].cone_spread_enabled = button_pressed
 
-func _on_set_SprayCount(value):
-	if(connectedEmitter.cone_spread_enabled==true and value<=1):
-		get_node("Menu/SprayCount_Input").get_line_edit().text = str(connectedEmitter.spray_count)
+#function to update the spray count of emitter
+#params: tab that was updated and new value
+#return: null
+func update_SprayCount(tab,value):
+	if(tab_emitter_map[tab].cone_spread_enabled==true and value<=1):
+		get_node("Menu/SprayCount_Input").get_line_edit().text = str(tab_emitter_map[tab].spray_count)
 		get_node("Menu/Spread_Input").pressed = false
 		#@todo: pop-up warning
 		return
-	connectedEmitter.spray_count = value
+	tab_emitter_map[tab].spray_count = value
 
-func _on_set_ConeAngle(value):
-	connectedEmitter.set_spread_angle(value)
+#function to update the spray cone angle of emitter
+#params: tab that was updated and new value
+#return: null
+func update_ConeAngle(tab,value):
+	tab_emitter_map[tab].set_spread_angle(value)
 
-func _on_set_SpreadWidth(value):
-	connectedEmitter.spread_width = value
+#function to update the spread width value of emitter
+#params: tab that was updated and new value
+#return: null
+func update_SpreadWidth(tab,value):
+	tab_emitter_map[tab].spread_width = value
 
-func _on_set_RotationRate(value):
-	connectedEmitter.rotation_rate = value
+#function to update the rotation rate of emitter
+#params: tab that was updated and new value
+#return: null
+func update_RotationRate(tab,value):
+	tab_emitter_map[tab].rotation_rate = value
 
-func _on_set_AimEnabled(button_pressed):
-	connectedEmitter.aim_enabled = button_pressed
+#function to update the aim status of emitter
+#params: tab that was updated and new value
+#return: null
+func update_AimEnabled(tab,button_pressed):
+	tab_emitter_map[tab].aim_enabled = button_pressed
 
-func _on_set_AimCooldown(value):
-	connectedEmitter.aim_pause = value
+#function to update the aim cooldon value of emitter
+#params: tab that was updated and new value
+#return: null
+func update_AimCooldown(tab,value):
+	tab_emitter_map[tab].aim_pause = value
 
-func _on_set_XOff(value):
-	connectedEmitter.aim_offset.x = value
+#function to update the x offset value of emitter
+#params: tab that was updated and new value
+#return: null
+func update_XOff(tab,value):
+	tab_emitter_map[tab].aim_offset.x = value
 
-func _on_set_YOff(value):
-	connectedEmitter.aim_offset.y = value
+#function to update the y offset value of emitter
+#params: tab that was updated and new value
+#return: null
+func update_YOff(tab,value):
+	tab_emitter_map[tab].aim_offset.y = value
+
+#function to update the load path of emitter
+#params: tab that was updated and new value
+#return: null
+func update_loadSelected(tab,path):
+	tab_emitter_map[tab].load_Emitter(path)
+
+#function to update the save path of emitter
+#params: tab that was updated and new value
+#return: null
+func update_savePathSelected(tab,path):
+	tab_emitter_map[tab].save(path)
