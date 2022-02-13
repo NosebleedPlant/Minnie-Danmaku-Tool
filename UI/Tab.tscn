@@ -353,6 +353,6 @@ dialog_text = "Unsaved changes will be lost"
 [connection signal="value_changed" from="Menu/HBoxContainer2/Yoffset_Input" to="." method="_on_set_YOff"]
 [connection signal="pressed" from="LoadExisting" to="." method="_on_Load_emitter"]
 [connection signal="pressed" from="Save" to="." method="_on_SaveEmitter"]
-[connection signal="file_selected" from="LoadDialog" to="." method="_on_emtterSelected"]
+[connection signal="file_selected" from="LoadDialog" to="." method="_on_loadSelected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_savePathSelected"]
 [connection signal="confirmed" from="LoadWarning" to="." method="_on_acceptLoadWarning"]

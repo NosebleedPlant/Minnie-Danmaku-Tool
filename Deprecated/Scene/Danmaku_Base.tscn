@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Deprecated/Scene/Dummy_Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Deprecated/Scripts/Danmaku_Base.gd" type="Script" id=2]
+[ext_resource path="res://Deprecated/Scripts/even older/Danmaku_Base.gd" type="Script" id=2]
 [ext_resource path="res://Deprecated/Scene/UI Scenes/System_Info.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Deprecated/Scene/Enemy.tscn" type="PackedScene" id=5]
 

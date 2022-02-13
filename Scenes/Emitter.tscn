@@ -20,4 +20,4 @@ position = Vector2( 915.345, 5 )
 scale = Vector2( 29.6045, 0.15625 )
 texture = ExtResource( 1 )
 
-[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="input_event" from="Area2D" to="." method="on_Input_Event"]
