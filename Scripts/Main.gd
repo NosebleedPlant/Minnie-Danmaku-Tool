@@ -8,7 +8,7 @@ var _Tab = preload("res://UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
-var emitter_list = []
+var tab_emitter_map = {}
 var emitter_count = 0
 onready var editor = find_node("UI")
 var repositioning_emitter = false						#indicates if repositioning
@@ -37,7 +37,6 @@ func _process(delta):
 func spawn_Emitter():
 	var emitter = _Emitter.instance()
 	emitter_count+=1
-	emitter_list.append(emitter)
 	emitter.init(get_global_mouse_position(),"Default_Emitter_"+str(emitter_count))
 	self.add_child(emitter)#emitter enters tree
 	return emitter
@@ -52,6 +51,7 @@ func spawn_Editior(emitter):
 	tab = _Tab.instance()
 	editor.get_node("Editor").add_child(tab)
 	tab.init(emitter)
+	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
 	return tab
 
 #notifies system that user is repositioning emitter or rotating emitter based on input
@@ -85,3 +85,50 @@ func rotate_Emitter():
 		rotating_emitter = false
 
 #@TODO: adjust position and rotation with editor not directly
+func update_XCoord(tab,x):
+	tab_emitter_map[tab].position.x = x
+
+func update_YCoord(tab,y):
+	tab_emitter_map[tab].position.y = y
+
+func update_Angle(tab,deg):
+	tab_emitter_map[tab].set_rotation(deg2rad(deg))
+
+func update_SprayCooldown(tab,value):
+	tab_emitter_map[tab].spray_cooldown = value
+
+func _on_SpreadEnabled(tab,button_pressed):
+	if(tab_emitter_map[tab].spray_count <=1):
+		tab.get_node("Menu/Spread_Input").pressed = false
+		#@todo: pop-up warning
+		return
+	tab_emitter_map[tab].cone_spread_enabled = button_pressed
+
+func _on_set_SprayCount(value):
+	if(connectedEmitter.cone_spread_enabled==true and value<=1):
+		get_node("Menu/SprayCount_Input").get_line_edit().text = str(connectedEmitter.spray_count)
+		get_node("Menu/Spread_Input").pressed = false
+		#@todo: pop-up warning
+		return
+	connectedEmitter.spray_count = value
+
+func _on_set_ConeAngle(value):
+	connectedEmitter.set_spread_angle(value)
+
+func _on_set_SpreadWidth(value):
+	connectedEmitter.spread_width = value
+
+func _on_set_RotationRate(value):
+	connectedEmitter.rotation_rate = value
+
+func _on_set_AimEnabled(button_pressed):
+	connectedEmitter.aim_enabled = button_pressed
+
+func _on_set_AimCooldown(value):
+	connectedEmitter.aim_pause = value
+
+func _on_set_XOff(value):
+	connectedEmitter.aim_offset.x = value
+
+func _on_set_YOff(value):
+	connectedEmitter.aim_offset.y = value

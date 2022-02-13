@@ -5,6 +5,8 @@ var connectedEmitter	#emitter that thsi tab is responsible for
 var player_pos			#player position entered last
 var last_angle			#last entered rotaion
 
+onready var controler = get_tree().get_root().get_child(0)
+
 #_MAIN:
 # warning-ignore:unused_argument
 func _process(delta):
@@ -43,10 +45,10 @@ func init(emitter):
 	set_name_field(emitter.name)#set name feild
 
 func _on_set_X(value):
-	connectedEmitter.position.x = value
+	controler.update_XCoord(self,value)
 
 func _on_set_Y(value):
-	connectedEmitter.position.y = value
+	controler.update_YCoord(self,value)
 
 func _on_set_Angle(value):
 	connectedEmitter.set_rotation(deg2rad(value))
