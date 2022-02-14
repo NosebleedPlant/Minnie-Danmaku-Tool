@@ -1,9 +1,10 @@
 extends Sprite
+
 #_EDITABLE PARAMS
 var bullet_radius = 10			#radius of bullet hitbox
 var bullet_speed = 100			#speed of bullet
 var bullet_life_span = null		#life span of a single bullet
-var life_time = 0				#how long this bullet has been alive
+var life_time = 10				#how long this bullet has been alive
 var collided = false			#has a collision happened
 var player_position				#players current position
 

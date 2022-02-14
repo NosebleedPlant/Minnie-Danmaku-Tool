@@ -2,9 +2,9 @@ extends Node2D
 
 #_PRELOADS
 #
-var _Emitter = preload("res://Scenes/Emitter.tscn")		#emitter
-var _Editor = preload("res://UI/Editor.tscn")			#the editor menu
-var _Tab = preload("res://UI/Tab.tscn")					#tab in editor
+var _Emitter = preload("res://Scenes/Emitter_Template.tscn")		#emitter
+var _Editor = preload("res://Scenes/UI/Editor.tscn")			#the editor menu
+var _Tab = preload("res://Scenes/UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
@@ -150,7 +150,7 @@ func update_SprayCount(tab,value):
 #params: tab that was updated and new value
 #return: null
 func update_ConeAngle(tab,value):
-	tab_emitter_map[tab].set_spread_angle(value)
+	tab_emitter_map[tab].cone_angle = deg2rad(value)
 
 #function to update the spread width value of emitter
 #params: tab that was updated and new value

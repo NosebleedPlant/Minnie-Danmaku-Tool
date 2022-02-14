@@ -1,18 +1,16 @@
-extends Sprite
+extends Node2D
 
 #_PRELOADS:
-#
 var bullet_adress = "res://Scenes/Provided Bullets/Bullet.tscn"
 var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
-#
 var spray_cooldown = 0.5			#cooldown between shots
 var rotation_rate = 0				#rate of eimiter rotaiotn
 #_-spread params
 var cone_spread_enabled = false		#cone spread enabled
 var spray_count = 1					#bulletcount in a single spray
-var spread_angle=0					#spread angle between bullets
+var cone_angle=0					#spread angle between bullets
 var spread_width=0					#spread width between bullets
 #_-aim params
 var aim_enabled = false				#aiming at player
@@ -21,7 +19,6 @@ var aim_offset = Vector2.ZERO		#offset from player
 
 
 #_GLOBALS:
-#
 onready var controler = get_tree().get_root().get_child(0)	#for easy access to root
 onready var player = get_parent().find_node("Player") 		#for easy access to player node
 var shot_timer = spray_cooldown								#timer between shots
@@ -31,7 +28,11 @@ var rotating_emitter = false								#indicates if adjusting rotate
 
 #_MAIN:
 #
+#main function calls aim or rotate based on enabled profiles
+#after targeting calls shoot function
 func _process(delta):
+	_move()
+	_bound_Handler()
 	# warning-ignore:standalone_ternary
 	aim(delta,player.position) if aim_enabled else rotate(delta)
 	shoot(delta)
@@ -39,12 +40,17 @@ func _process(delta):
 
 #_HELPER FUNCTIONS:
 #
-#initalization function sets starting vals
-#param:spawn position, name of eitter
+#moves the emitter, meant to be overriden
+#param: none
 #return: null
-func init(pos,name_str):
-	self.position = pos
-	self.name = name_str
+func _move():
+	pass
+
+#handle going out of bounds, meant to be overriden
+#param: none
+#return: null
+func _bound_Handler():
+	pass
 
 #aims at player
 #param:delta(time between frames), player position vector
@@ -111,34 +117,12 @@ func position_Bullet(childBullets):
 #return: same as above
 func rotate_Bullet(childBullets):
 	if(cone_spread_enabled):
-		var spread_angle_increment = spread_angle/(spray_count-1)
-		var curr_angle = (spread_angle/2)*-1
+		var cone_angle_increment = cone_angle/(spray_count-1)
+		var curr_angle = (cone_angle/2)*-1
 		for bullet in childBullets:
 			bullet.rotation += curr_angle
-			curr_angle+=spread_angle_increment
+			curr_angle+=cone_angle_increment
 	return childBullets
-
-#save the params for emitter
-#param:save file name
-#return: null
-func save(file_name):
-	var file = File.new()
-	if file.file_exists(file_name):
-		file.open(file_name, File.WRITE)
-		file.store_var(position)
-		file.store_var(rotation)
-		file.store_var(bullet_adress)
-		file.store_var(spray_cooldown)
-		file.store_var(rotation_rate)
-		file.store_var(cone_spread_enabled)
-		file.store_var(spray_count)
-		file.store_var(spread_angle)
-		file.store_var(spread_width)
-		file.store_var(aim_enabled)
-		file.store_var(aim_pause)
-		file.store_var(aim_offset)
-		file.close()
-	return
 
 #load the params for emitter
 #param:save file name
@@ -149,24 +133,19 @@ func load_Emitter(file_name):
 		file.open(file_name, File.READ)
 		position = file.get_var()
 		rotation = file.get_var()
+		
+		#load the new bullet
 		bullet_adress = file.get_var()
+		_Bullet = load(bullet_adress)
+		
 		spray_cooldown = file.get_var()
 		rotation_rate = file.get_var()
 		cone_spread_enabled = file.get_var()
 		spray_count = file.get_var()
-		spread_angle = file.get_var()
+		cone_angle = file.get_var()
 		spread_width = file.get_var()
 		aim_enabled = file.get_var()
 		aim_pause = file.get_var()
 		aim_offset = file.get_var()
 		file.close()
-	return
-
-#_SIGNAL EVENTS:
-#
-#on input it calls the input handler from root
-#param: viewport of game, input event, shape
-#return null
-func on_Input_Event(viewport, event, shape_idx):
-	controler.adjustment_Input(self,event)
 	return
