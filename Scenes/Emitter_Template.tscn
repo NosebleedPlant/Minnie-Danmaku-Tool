@@ -22,4 +22,4 @@ texture = ExtResource( 1 )
 [node name="Arrow Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 
-[connection signal="input_event" from="Area2D" to="Arrow Sprite" method="on_Input_Event"]
+[connection signal="input_event" from="Area2D" to="." method="on_Input_Event"]
