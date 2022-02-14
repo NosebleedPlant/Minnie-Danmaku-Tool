@@ -2,7 +2,7 @@ extends Node2D
 
 #_PRELOADS
 #
-var _Emitter = preload("res://Scenes/Emitter_Template.tscn")		#emitter
+var _Emitter = preload("res://Scenes/Editable_Emitter.tscn")		#emitter
 var _Editor = preload("res://Scenes/UI/Editor.tscn")			#the editor menu
 var _Tab = preload("res://Scenes/UI/Tab.tscn")					#tab in editor
 
