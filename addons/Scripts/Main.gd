@@ -2,9 +2,9 @@ extends Node2D
 
 #_PRELOADS
 #
-var _Emitter = preload("res://Scenes/Editable_Emitter.tscn")		#emitter
-var _Editor = preload("res://Scenes/UI/Editor.tscn")			#the editor menu
-var _Tab = preload("res://Scenes/UI/Tab.tscn")					#tab in editor
+var _Emitter = preload("res://addons/Scenes/Editable_Emitter.tscn")		#emitter
+var _Editor = preload("res://addons/Scenes/UI/Editor.tscn")			#the editor menu
+var _Tab = preload("res://addons/Scenes/UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
@@ -91,11 +91,12 @@ func rotate_Emitter():
 #return: null
 func update_Tab(tab):
 	var emitter_position = tab_emitter_map[tab].position
-	if(tab.get_position_field()!=emitter_position):
+	if(repositioning_emitter):
+		print("edited")
 		tab.set_position_field(emitter_position)
 
 	var emitter_rotation = tab_emitter_map[tab].rotation
-	if(tab.get_rotation_field()!=emitter_rotation):
+	if(rotating_emitter):
 		tab.set_rotation_field(emitter_rotation)
 	return
 

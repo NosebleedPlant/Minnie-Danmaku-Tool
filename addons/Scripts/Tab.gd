@@ -44,7 +44,6 @@ func get_position_field():
 #param:new angle
 #return: null
 func set_rotation_field(angle):
-	print(angle)
 	get_node("Menu/Rotation_Input").get_line_edit().text = str(rad2deg(angle))
 
 func get_rotation_field():

@@ -1,8 +1,8 @@
 extends Node2D
 
 #_PRELOADS:
-var bullet_adress = "res://Scenes/Provided Bullets/Bullet.tscn"
-var _Bullet = preload("res://Scenes/Provided Bullets/Bullet.tscn")
+var bullet_adress:String = "res://addons/Scenes/Provided Bullets/Bullet.tscn"
+var _Bullet = preload("res://addons/Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
 var spray_cooldown = 0.5			#cooldown between shots

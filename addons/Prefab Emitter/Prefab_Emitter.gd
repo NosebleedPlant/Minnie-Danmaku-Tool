@@ -1,4 +1,4 @@
-extends "res://Scripts/Abstract_Emitter.gd"
+extends "res://addons/Scripts/Abstract_Emitter.gd"
 
 ###############################################################################
 #_EXTENSIONS:
