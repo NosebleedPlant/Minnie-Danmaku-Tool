@@ -18,6 +18,5 @@ https://user-images.githubusercontent.com/42461443/153335317-6003f79d-d478-4c0b-
 | Setup system for transffering patterns out of plugin  |
 | Implmentation of multiple bullet arrays  |
 | Basic bullet params  |
-| Turn the whole thing into an addon instead of a project  |
 | Documentation in serachable pdf form  |
 
