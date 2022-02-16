@@ -2,7 +2,6 @@ extends Tabs
 
 #_GLOBALS:
 #
-var connectedEmitter	#emitter that thsi tab is responsible for
 onready var controler = get_tree().get_root().get_child(0)
 
 #_MAIN:
@@ -14,40 +13,10 @@ func _process(delta):
 
 #INITALIZATION METHOD:
 #
+#initalizes the emitter before it enters scnee
 func init(emitter):
-	connectedEmitter = emitter#set emitter
 	self.name = str(emitter.name)#set name
 	set_name_field(emitter.name)#set name feild
-
-#_SETTER GETTERS:
-#
-#sets the feilds for the name
-#param:name of emitter
-#return: null
-func set_name_field(name_text):
-	get_node("Menu/Name_Input").text = name_text
-
-#sets the feilds for x,y
-#param:position vector of player
-#return: null
-func set_position_field(position):
-	get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text = str(position.x)
-	get_node("Menu/HBoxContainer4/Y_Input").get_line_edit().text = str(position.y)
-
-func get_position_field():
-	return Vector2(
-		float(get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text),
-		float(get_node("Menu/HBoxContainer4/Y_Input").get_line_edit().text)
-		)
-
-#sets the feilds for rotation angle
-#param:new angle
-#return: null
-func set_rotation_field(angle):
-	get_node("Menu/Rotation_Input").get_line_edit().text = str(rad2deg(angle))
-
-func get_rotation_field():
-	return deg2rad(float(get_node("Menu/Rotation_Input").get_line_edit().text))
 
 #_SIGNAL EVENTS:
 #
@@ -97,11 +66,11 @@ func _on_set_AimCooldown(value):
 
 #call when xoffset is set
 func _on_set_XOff(value):
-	connectedEmitter.aim_offset(self,value)
+	controler.update_XOff(self,value)
 
 #call when yoffset is 
 func _on_set_YOff(value):
-	connectedEmitter.update_YOff(self,value)
+	controler.update_YOff(self,value)
 
 #call when emitter load button pressed, pops the load warning
 func _on_Load_emitter():
@@ -122,3 +91,53 @@ func _on_SaveEmitter():
 #call when save directory selected
 func _on_savePathSelected(path):
 	controler.update_savePathSelected(self,path)
+
+
+#_SETTERS:
+func set_name_field(name_text):
+	get_node("Menu/Name_Input").text = name_text
+
+func set_position_field(position):
+	get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text = str(position.x)
+	get_node("Menu/HBoxContainer4/Y_Input").get_line_edit().text = str(position.y)
+
+func set_rotation_field(angle):
+	get_node("Menu/Rotation_Input").get_line_edit().text = str(rad2deg(angle))
+
+func set_SprayCooldown(value):
+	get_node("Menu/SprayCooldown_Input").get_line_edit().text = str(value)
+
+func set_SpreadEnabled(value):
+	get_node("Menu/Spread_Input").pressed = value
+
+func set_SprayCount(value):
+	get_node("Menu/SprayCount_Input").get_line_edit().text = str(value)
+
+func set_ConeAngle(value):
+	get_node("Menu/ConeAngle_Input").get_line_edit().text = str(value)
+
+func set_SpreadWidth(value):
+	get_node("Menu/SpreadWidth_Input").get_line_edit().text = str(value)
+
+func set_RotationRate(value):
+	get_node("Menu/Rotation_Rate_Input").get_line_edit().text = str(value)
+
+func set_AimEnabled(value):
+	get_node("Menu/Aim_Input").pressed = value
+
+func set_AimCooldown(value):
+	get_node("Menu/Aim_Cooldown_Input").get_line_edit().text = str(value)
+
+func set_aimOffset(value):
+	get_node("Menu/HBoxContainer/Xoffset_Input").get_line_edit().text = str(value.x)
+	get_node("Menu/HBoxContainer2/Yoffset_Input").get_line_edit().text = str(value.y)
+
+#_GETTERS:
+func get_position_field():
+	return Vector2(
+		float(get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text),
+		float(get_node("Menu/HBoxContainer4/Y_Input").get_line_edit().text)
+		)
+
+func get_rotation_field():
+	return deg2rad(float(get_node("Menu/Rotation_Input").get_line_edit().text))

@@ -14,21 +14,26 @@ onready var editor = find_node("UI")	#easy access to editor ui node
 var repositioning_emitter = false		#indicates if repositioning
 var rotating_emitter = false			#indicates if adjusting rotate
 var emitter_editing:Node2D
+var screen_size = OS.get_screen_size()
 
 #_MAIN: 
 #
 # handles user input
-# warning-ignore:unused_argument
-# param: delta(time between frames)
-# return: enull
-func _process(delta):
+# param: input event
+# return: null
+func _unhandled_input(event):
 	if Input.is_action_just_pressed("mouse_left"):
 		var emitter = spawn_Emitter()#create new emitter at location of right click
 		var tab = spawn_Editior(emitter)#create tabs in editor for each new emitter spawned
+
+# calls adjustment functions when needed
+# warning-ignore:unused_argument
+# param: delta(time between frames)
+# return: null
+func _process(delta):
 	if repositioning_emitter: reposition_Emitter(delta)
 	if rotating_emitter: rotate_Emitter()
 	return
-
 
 #_HELPER FUNCTIONS:
 #
@@ -71,7 +76,13 @@ func adjustment_Input(emitter,event):
 #param:delta(time between frames)
 #return: null
 func reposition_Emitter(delta):
-	emitter_editing.position = lerp(emitter_editing.position,get_global_mouse_position(),25*delta)
+	#calculates new position
+	var new_position = lerp(emitter_editing.position,get_global_mouse_position(),25*delta)
+	#clamps values so emitter dosnt go off screen
+	new_position.x = clamp(new_position.x,0,screen_size.x)
+	new_position.y = clamp(new_position.y,0,screen_size.y)
+	#assigns
+	emitter_editing.position = new_position
 	if Input.is_action_just_released("mouse_right"):
 		repositioning_emitter = false
 
@@ -90,14 +101,11 @@ func rotate_Emitter():
 #param: tab
 #return: null
 func update_Tab(tab):
-	var emitter_position = tab_emitter_map[tab].position
-	if(repositioning_emitter):
-		print("edited")
-		tab.set_position_field(emitter_position)
-
-	var emitter_rotation = tab_emitter_map[tab].rotation
-	if(rotating_emitter):
-		tab.set_rotation_field(emitter_rotation)
+	if(emitter_editing == tab_emitter_map[tab]):
+		if(repositioning_emitter):
+			tab.set_position_field(tab_emitter_map[tab].position)	
+		if(rotating_emitter):
+			tab.set_rotation_field(tab_emitter_map[tab].rotation)
 	return
 
 #_UPDATE MODEL:
@@ -134,7 +142,7 @@ func update_SpreadEnabled(tab,button_pressed):
 		tab.get_node("Menu/Spread_Input").pressed = false
 		#@todo: pop-up warning
 		return
-	tab_emitter_map[tab].cone_spread_enabled = button_pressed
+	tab_emitter_map[tab].spread_enabled = button_pressed
 
 #function to update the spray count of emitter
 #params: tab that was updated and new value
@@ -193,7 +201,20 @@ func update_YOff(tab,value):
 #params: tab that was updated and new value
 #return: null
 func update_loadSelected(tab,path):
-	tab_emitter_map[tab].load_Emitter(path)
+	var emitter = tab_emitter_map[tab]
+	emitter.load_Emitter(path)
+	tab.set_name_field(emitter.name)
+	tab.set_position_field(emitter.position)
+	tab.set_rotation_field(emitter.rotation)
+	tab.set_SprayCooldown(emitter.spray_cooldown)
+	tab.set_SpreadEnabled(emitter.spread_enabled)
+	tab.set_SprayCount(emitter.spray_count)
+	tab.set_ConeAngle(emitter.cone_angle)
+	tab.set_SpreadWidth(emitter.spread_width)
+	tab.set_RotationRate(emitter.rotation_rate)
+	tab.set_AimEnabled(emitter.aim_enabled)
+	tab.set_AimCooldown(emitter.aim_cooldown)
+	tab.set_aimOffset(emitter.aim_offset)
 
 #function to update the save path of emitter
 #params: tab that was updated and new value

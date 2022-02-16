@@ -27,12 +27,12 @@ func save(file_name):
 		file.store_var(bullet_adress)
 		file.store_var(spray_cooldown)
 		file.store_var(rotation_rate)
-		file.store_var(cone_spread_enabled)
+		file.store_var(spread_enabled)
 		file.store_var(spray_count)
 		file.store_var(cone_angle)
 		file.store_var(spread_width)
 		file.store_var(aim_enabled)
-		file.store_var(aim_pause)
+		file.store_var(aim_cooldown)
 		file.store_var(aim_offset)
 		file.close()
 	return
@@ -55,5 +55,5 @@ func on_Input_Event(viewport, event, shape_idx):
 #param: input event
 #return null
 func _bound_Handler():
-	position.x = wrapf(position.x, 0, screen_size.x)
-	position.y = wrapf(position.y, 0, screen_size.y)
+	position.x = wrapf(position.x, -1, screen_size.x+1)
+	position.y = wrapf(position.y, -1, screen_size.y+1)

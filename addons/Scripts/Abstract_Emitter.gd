@@ -8,13 +8,13 @@ var _Bullet = preload("res://addons/Scenes/Provided Bullets/Bullet.tscn")
 var spray_cooldown = 0.5			#cooldown between shots
 var rotation_rate = 0				#rate of eimiter rotaiotn
 #_-spread params
-var cone_spread_enabled = false		#cone spread enabled
+var spread_enabled = false		#cone spread enabled
 var spray_count = 1					#bulletcount in a single spray
 var cone_angle=0					#spread angle between bullets
 var spread_width=0					#spread width between bullets
 #_-aim params
 var aim_enabled = false				#aiming at player
-var aim_pause = 0					#calls to player position per second
+var aim_cooldown = 0					#calls to player position per second
 var aim_offset = Vector2.ZERO		#offset from player
 
 
@@ -58,7 +58,7 @@ func _bound_Handler():
 #@TODO: aim offset not functioning correctly
 func aim(delta,player_position):
 	aim_timer += delta
-	if(aim_timer>=aim_pause):
+	if(aim_timer>=aim_cooldown):
 		look_at(player_position + aim_offset)
 		aim_timer =0
 	return
@@ -102,7 +102,7 @@ func instance_Bullet(childBullets):
 #param:array of bullets that are the child of this emitter
 #return: same as above
 func position_Bullet(childBullets):
-	if(cone_spread_enabled):
+	if(spread_enabled):
 		var spread = (spread_width/2)*-1
 		var spread_increment = spread_width/(spray_count-1)
 		var angle = self.rotation+deg2rad(90)
@@ -116,7 +116,7 @@ func position_Bullet(childBullets):
 #param:array of bullets that are the child of this emitter
 #return: same as above
 func rotate_Bullet(childBullets):
-	if(cone_spread_enabled):
+	if(spread_enabled):
 		var cone_angle_increment = cone_angle/(spray_count-1)
 		var curr_angle = (cone_angle/2)*-1
 		for bullet in childBullets:
@@ -136,16 +136,18 @@ func load_Emitter(file_name):
 		
 		#load the new bullet
 		bullet_adress = file.get_var()
-		_Bullet = load(bullet_adress)
+		var directory = Directory.new();
+		if directory.file_exists(bullet_adress):
+			_Bullet = load(bullet_adress)
 		
 		spray_cooldown = file.get_var()
 		rotation_rate = file.get_var()
-		cone_spread_enabled = file.get_var()
+		spread_enabled = file.get_var()
 		spray_count = file.get_var()
 		cone_angle = file.get_var()
 		spread_width = file.get_var()
 		aim_enabled = file.get_var()
-		aim_pause = file.get_var()
+		aim_cooldown = file.get_var()
 		aim_offset = file.get_var()
 		file.close()
 	return
