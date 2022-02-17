@@ -22,9 +22,14 @@ var screen_size = OS.get_screen_size()
 # param: input event
 # return: null
 func _unhandled_input(event):
-	if Input.is_action_just_pressed("mouse_left"):
+	if event.is_action_pressed("mouse_left"):
 		var emitter = spawn_Emitter()#create new emitter at location of right click
 		var tab = spawn_Editior(emitter)#create tabs in editor for each new emitter spawned
+	if event.is_action_released("mouse_right"):
+		repositioning_emitter = false
+		rotating_emitter = false
+	if event.is_action_released("rotate"):
+		rotating_emitter = false
 
 # calls adjustment functions when needed
 # warning-ignore:unused_argument
@@ -45,6 +50,7 @@ func spawn_Emitter():
 	emitter_count+=1
 	emitter.init(get_global_mouse_position(),"Default_Emitter_"+str(emitter_count))
 	self.add_child(emitter)#emitter enters tree
+	emitter_editing = emitter
 	return emitter
 
 #makes editor visable and spawns a tab that is responsible for this emitter, triggers on middle mouse
@@ -67,10 +73,9 @@ func adjustment_Input(emitter,event):
 	if event.is_action_pressed("mouse_right"):
 		repositioning_emitter = true
 		emitter_editing = emitter
-	if event.is_action_pressed("mouse_right") and Input.is_action_pressed("rotate"):
-		repositioning_emitter = false
-		rotating_emitter = true
-		emitter_editing = emitter
+		if Input.is_action_pressed("rotate"):
+			repositioning_emitter = false
+			rotating_emitter = true
 
 #drag and reposition emitter by lerping to mouse positon at rate of 25*delta, triggers on right click
 #param:delta(time between frames)
@@ -83,16 +88,16 @@ func reposition_Emitter(delta):
 	new_position.y = clamp(new_position.y,0,screen_size.y)
 	#assigns
 	emitter_editing.position = new_position
-	if Input.is_action_just_released("mouse_right"):
-		repositioning_emitter = false
+#	if Input.is_action_just_released("mouse_right"):
+#		repositioning_emitter = false
 
 #adjust rotation of emitter to look at mouse location, triggers on ctrl+right click
 #param:delta(time between frames)
 #return: null
 func rotate_Emitter():
 	emitter_editing.look_at(get_global_mouse_position())
-	if Input.is_action_just_released("rotate"):
-		rotating_emitter = false
+#	if Input.is_action_just_released("rotate"):
+#		rotating_emitter = false
 
 #_UPDATE VIEW:
 #

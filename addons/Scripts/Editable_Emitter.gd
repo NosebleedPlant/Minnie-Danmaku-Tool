@@ -57,3 +57,4 @@ func on_Input_Event(viewport, event, shape_idx):
 func _bound_Handler():
 	position.x = wrapf(position.x, -1, screen_size.x+1)
 	position.y = wrapf(position.y, -1, screen_size.y+1)
+
