@@ -14,9 +14,9 @@ func _process(delta):
 #INITALIZATION METHOD:
 #
 #initalizes the emitter before it enters scnee
-func init(emitter):
-	self.name = str(emitter.name)#set name
-	set_name_field(emitter.name)#set name feild
+func init(idx,emitter_name):
+	self.name = str(idx)#set name
+	set_name_field(emitter_name)#set name feild
 
 #_SIGNAL EVENTS:
 #
@@ -82,11 +82,14 @@ func _on_acceptLoadWarning():
 
 #call when load directory selected
 func _on_loadSelected(path):
-	controler.update_loadSelected(self,path)
+	controler.load_Selected(self,path)
 
 #call when emitter save button pressed
 func _on_SaveEmitter():
 	get_node("SaveDialog").popup_centered()
+
+func _on_Delete():
+	controler.delete_Emitter(self)
 
 #call when save directory selected
 func _on_savePathSelected(path):

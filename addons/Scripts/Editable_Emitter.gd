@@ -4,6 +4,7 @@ extends "res://addons/Scripts/Abstract_Emitter.gd"
 #_EXTENSIONS:
 ###############################################################################
 #_EXTRA VARIABLES:
+var tab_idx = 0
 var screen_size = OS.get_screen_size()
 
 #_HELPER FUNCTIONS:

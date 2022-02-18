@@ -3,18 +3,18 @@ extends Node2D
 #_PRELOADS
 #
 var _Emitter = preload("res://addons/Scenes/Editable_Emitter.tscn")		#emitter
-var _Editor = preload("res://addons/Scenes/UI/Editor.tscn")			#the editor menu
 var _Tab = preload("res://addons/Scenes/UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
 var tab_emitter_map = {}				#maps every tab to an emitter
 var emitter_count = 0					#count of created emitters
-onready var editor = find_node("UI")	#easy access to editor ui node
+onready var editor = find_node("UI").get_node("Editor")	#easy access to editor ui node
 var repositioning_emitter = false		#indicates if repositioning
 var rotating_emitter = false			#indicates if adjusting rotate
 var emitter_editing:Node2D
 var screen_size = OS.get_screen_size()
+var tab_count = 0
 
 #_MAIN: 
 #
@@ -50,7 +50,7 @@ func spawn_Emitter():
 	emitter_count+=1
 	emitter.init(get_global_mouse_position(),"Default_Emitter_"+str(emitter_count))
 	self.add_child(emitter)#emitter enters tree
-	emitter_editing = emitter
+	emitter_editing = emitter#sets current emitter to be the one that is being edited
 	return emitter
 
 #makes editor visable and spawns a tab that is responsible for this emitter, triggers on middle mouse
@@ -59,11 +59,14 @@ func spawn_Emitter():
 func spawn_Editior(emitter):
 	var tab
 	if(emitter_count<=1):#first emitter create both editor and tab
-		editor.get_node("Editor").set_visible(true)
+		editor.set_visible(true)
 	tab = _Tab.instance()
-	editor.get_node("Editor").add_child(tab)
-	tab.init(emitter)
+	editor.add_child(tab)
+	tab.init(str(tab_count),emitter.name)
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
+	emitter.tab_idx = tab_count#informs emitter that the tab responsible for it is at this index
+	editor.current_tab = tab_count#sets editor to the page of the new tab
+	tab_count+=1
 	return tab
 
 #handles user input for adjusting an emitter directly
@@ -73,6 +76,7 @@ func adjustment_Input(emitter,event):
 	if event.is_action_pressed("mouse_right"):
 		repositioning_emitter = true
 		emitter_editing = emitter
+		editor.current_tab = emitter.tab_idx
 		if Input.is_action_pressed("rotate"):
 			repositioning_emitter = false
 			rotating_emitter = true
@@ -205,7 +209,7 @@ func update_YOff(tab,value):
 #function to update the load path of emitter
 #params: tab that was updated and new value
 #return: null
-func update_loadSelected(tab,path):
+func load_Selected(tab,path):
 	var emitter = tab_emitter_map[tab]
 	emitter.load_Emitter(path)
 	tab.set_name_field(emitter.name)
@@ -226,3 +230,11 @@ func update_loadSelected(tab,path):
 #return: null
 func update_savePathSelected(tab,path):
 	tab_emitter_map[tab].save(path)
+
+#function to delete the current node
+#params: tab that was updated
+#return: null
+func delete_Emitter(tab):
+	print("hi")
+	tab_emitter_map[tab].queue_free()
+	tab.queue_free()

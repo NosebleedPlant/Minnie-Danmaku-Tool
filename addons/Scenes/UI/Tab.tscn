@@ -312,29 +312,41 @@ __meta__ = {
 }
 
 [node name="LoadBullet" type="Button" parent="."]
-margin_top = 404.637
-margin_right = 146.0
-margin_bottom = 424.637
+margin_top = 405.0
+margin_right = 92.0
+margin_bottom = 425.0
 text = "Load Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadExisting" type="Button" parent="."]
-margin_top = 437.176
-margin_right = 146.0
-margin_bottom = 457.176
-text = "Load Existing Emitter"
+margin_left = 105.0
+margin_top = 405.0
+margin_right = 198.0
+margin_bottom = 425.0
+text = "Load Emitter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Save" type="Button" parent="."]
-margin_left = 176.201
-margin_top = 437.176
-margin_right = 268.201
-margin_bottom = 457.176
+margin_top = 437.0
+margin_right = 93.0
+margin_bottom = 457.0
+rect_pivot_offset = Vector2( -463.865, -159.858 )
 text = "Save Current"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Delete" type="Button" parent="."]
+margin_left = 105.0
+margin_top = 437.0
+margin_right = 197.0
+margin_bottom = 457.0
+rect_pivot_offset = Vector2( -463.865, -159.858 )
+text = "Delete"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -369,6 +381,7 @@ dialog_text = "Unsaved changes will be lost"
 [connection signal="value_changed" from="Menu/HBoxContainer2/Yoffset_Input" to="." method="_on_set_YOff"]
 [connection signal="pressed" from="LoadExisting" to="." method="_on_Load_emitter"]
 [connection signal="pressed" from="Save" to="." method="_on_SaveEmitter"]
+[connection signal="pressed" from="Delete" to="." method="_on_Delete"]
 [connection signal="file_selected" from="LoadDialog" to="." method="_on_loadSelected"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_savePathSelected"]
 [connection signal="confirmed" from="LoadWarning" to="." method="_on_acceptLoadWarning"]
