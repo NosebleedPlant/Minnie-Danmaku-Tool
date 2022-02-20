@@ -14,7 +14,7 @@ var cone_angle=0					#spread angle between bullets
 var spread_width=0					#spread width between bullets
 #_-aim params
 var aim_enabled = false				#aiming at player
-var aim_cooldown = 0					#calls to player position per second
+var aim_pause = 0					#calls to player position per second
 var aim_offset = Vector2.ZERO		#offset from player
 
 
@@ -58,7 +58,7 @@ func _bound_Handler():
 #@TODO: aim offset not functioning correctly
 func aim(delta,player_position):
 	aim_timer += delta
-	if(aim_timer>=aim_cooldown):
+	if(aim_timer>=aim_pause):
 		look_at(player_position + aim_offset)
 		aim_timer =0
 	return
@@ -147,7 +147,7 @@ func load_Emitter(file_name):
 		cone_angle = file.get_var()
 		spread_width = file.get_var()
 		aim_enabled = file.get_var()
-		aim_cooldown = file.get_var()
+		aim_pause = file.get_var()
 		aim_offset = file.get_var()
 		file.close()
 	return

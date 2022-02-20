@@ -19,23 +19,23 @@ func init(pos,name_str):
 #save the params for emitter
 #param:save file name
 #return: null
-func save(file_name):
+func save(file_path):
+	print("called")
 	var file = File.new()
-	if file.file_exists(file_name):
-		file.open(file_name, File.WRITE)
-		file.store_var(position)
-		file.store_var(rotation)
-		file.store_var(bullet_adress)
-		file.store_var(spray_cooldown)
-		file.store_var(rotation_rate)
-		file.store_var(spread_enabled)
-		file.store_var(spray_count)
-		file.store_var(cone_angle)
-		file.store_var(spread_width)
-		file.store_var(aim_enabled)
-		file.store_var(aim_cooldown)
-		file.store_var(aim_offset)
-		file.close()
+	file.open(file_path, File.WRITE)
+	file.store_var(position)
+	file.store_var(rotation)
+	file.store_var(bullet_adress)
+	file.store_var(spray_cooldown)
+	file.store_var(rotation_rate)
+	file.store_var(spread_enabled)
+	file.store_var(spray_count)
+	file.store_var(cone_angle)
+	file.store_var(spread_width)
+	file.store_var(aim_enabled)
+	file.store_var(aim_pause)
+	file.store_var(aim_offset)
+	file.close()
 	return
 
 #_SIGNAL EVENT:

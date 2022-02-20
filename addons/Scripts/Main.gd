@@ -149,7 +149,7 @@ func update_SprayCooldown(tab,value):
 func update_SpreadEnabled(tab,button_pressed):
 	if(tab_emitter_map[tab].spray_count <=1):
 		tab.get_node("Menu/Spread_Input").pressed = false
-		#@todo: pop-up warning
+		tab.get_node("SpreadWarning").popup_centered()
 		return
 	tab_emitter_map[tab].spread_enabled = button_pressed
 
@@ -157,10 +157,9 @@ func update_SpreadEnabled(tab,button_pressed):
 #params: tab that was updated and new value
 #return: null
 func update_SprayCount(tab,value):
-	if(tab_emitter_map[tab].cone_spread_enabled==true and value<=1):
-		get_node("Menu/SprayCount_Input").get_line_edit().text = str(tab_emitter_map[tab].spray_count)
-		get_node("Menu/Spread_Input").pressed = false
-		#@todo: pop-up warning
+	if(tab_emitter_map[tab].spread_enabled==true and value<=1):
+		tab.get_node("Menu/SprayCount_Input").value = tab_emitter_map[tab].spray_count
+		tab.get_node("SpreadWarning").popup_centered()
 		return
 	tab_emitter_map[tab].spray_count = value
 
@@ -229,6 +228,7 @@ func load_Selected(tab,path):
 #params: tab that was updated and new value
 #return: null
 func update_savePathSelected(tab,path):
+	print (path)
 	tab_emitter_map[tab].save(path)
 
 #function to delete the current node

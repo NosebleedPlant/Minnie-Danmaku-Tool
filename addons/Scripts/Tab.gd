@@ -76,29 +76,35 @@ func _on_set_YOff(value):
 func _on_Load_emitter():
 	get_node("LoadWarning").popup_centered()
 
-#call when load warning is accepted
+#call when load warning is accepted, pops up the file system
 func _on_acceptLoadWarning():
 	get_node("LoadDialog").popup_centered()
 
-#call when load directory selected
+#call when load directory selected in file system
 func _on_loadSelected(path):
 	controler.load_Selected(self,path)
 
-#call when emitter save button pressed
+#call when emitter save button pressed, pops up file system
 func _on_SaveEmitter():
 	get_node("SaveDialog").popup_centered()
 
-func _on_Delete():
-	controler.delete_Emitter(self)
-
-#call when save directory selected
+#call when save directory selected in file system
 func _on_savePathSelected(path):
 	controler.update_savePathSelected(self,path)
+
+#call when emitter delete button pressed, pops the delete warning
+func _on_Delete():
+	get_node("DeleteWarning").popup_centered()
+
+#deletes emitter
+func _on_acceptDeleteWarning():
+	controler.delete_Emitter(self)
 
 
 #_SETTERS:
 func set_name_field(name_text):
 	get_node("Menu/Name_Input").text = name_text
+	print()
 
 func set_position_field(position):
 	get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text = str(position.x)
