@@ -137,33 +137,33 @@ func update_YCoord(tab,y):
 func update_Angle(tab,deg):
 	tab_emitter_map[tab].set_rotation(deg2rad(deg))
 
-#function to update the spray cooldown of emitter
+#function to update the burst cooldown of emitter
 #params: tab that was updated and new value
 #return: null
-func update_SprayCooldown(tab,value):
-	tab_emitter_map[tab].spray_cooldown = value
+func update_BurstCooldown(tab,value):
+	tab_emitter_map[tab].burst_cooldown = value
 
 #function to update the spread status of emitter
 #params: tab that was updated and new value
 #return: null
 func update_SpreadEnabled(tab,button_pressed):
-	if(tab_emitter_map[tab].spray_count <=1):
+	if(tab_emitter_map[tab].burst_count <=1):
 		tab.get_node("Menu/Spread_Input").pressed = false
 		tab.get_node("SpreadWarning").popup_centered()
 		return
 	tab_emitter_map[tab].spread_enabled = button_pressed
 
-#function to update the spray count of emitter
+#function to update the burst count of emitter
 #params: tab that was updated and new value
 #return: null
-func update_SprayCount(tab,value):
+func update_BurstCount(tab,value):
 	if(tab_emitter_map[tab].spread_enabled==true and value<=1):
-		tab.get_node("Menu/SprayCount_Input").value = tab_emitter_map[tab].spray_count
+		tab.set_BurstCooldown(tab_emitter_map[tab].burst_count)
 		tab.get_node("SpreadWarning").popup_centered()
 		return
-	tab_emitter_map[tab].spray_count = value
+	tab_emitter_map[tab].burst_count = value
 
-#function to update the spray cone angle of emitter
+#function to update the burst cone angle of emitter
 #params: tab that was updated and new value
 #return: null
 func update_ConeAngle(tab,value):
@@ -196,14 +196,20 @@ func update_AimCooldown(tab,value):
 #function to update the x offset value of emitter
 #params: tab that was updated and new value
 #return: null
-func update_XOff(tab,value):
-	tab_emitter_map[tab].aim_offset.x = value
+func update_AimOff(tab,value):
+	tab_emitter_map[tab].aim_offset = deg2rad(value)
 
-#function to update the y offset value of emitter
+#function to update the x offset value of emitter
 #params: tab that was updated and new value
 #return: null
-func update_YOff(tab,value):
-	tab_emitter_map[tab].aim_offset.y = value
+func update_ArrayCount(tab,value):
+	tab_emitter_map[tab].array_count = value
+
+#function to update the x offset value of emitter
+#params: tab that was updated and new value
+#return: null
+func update_ArrayAngle(tab,value):
+	tab_emitter_map[tab].array_angle = deg2rad(value)
 
 #function to update the load path of emitter
 #params: tab that was updated and new value
@@ -214,15 +220,17 @@ func load_Selected(tab,path):
 	tab.set_name_field(emitter.name)
 	tab.set_position_field(emitter.position)
 	tab.set_rotation_field(emitter.rotation)
-	tab.set_SprayCooldown(emitter.spray_cooldown)
+	tab.set_BurstCooldown(emitter.burst_cooldown)
 	tab.set_SpreadEnabled(emitter.spread_enabled)
-	tab.set_SprayCount(emitter.spray_count)
+	tab.set_BurstCount(emitter.burst_count)
 	tab.set_ConeAngle(emitter.cone_angle)
 	tab.set_SpreadWidth(emitter.spread_width)
 	tab.set_RotationRate(emitter.rotation_rate)
 	tab.set_AimEnabled(emitter.aim_enabled)
-	tab.set_AimCooldown(emitter.aim_cooldown)
-	tab.set_aimOffset(emitter.aim_offset)
+	tab.set_AimCooldown(emitter.aim_pause)
+	tab.set_AimOffset(emitter.aim_offset)
+	tab.set_ArrayCount(emitter.array_count)
+	tab.set_ArrayAngle(emitter.array_angle)
 
 #function to update the save path of emitter
 #params: tab that was updated and new value

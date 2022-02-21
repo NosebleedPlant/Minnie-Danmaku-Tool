@@ -19,7 +19,7 @@ func init(idx,emitter_name):
 	set_name_field(emitter_name)#set name feild
 
 #_SIGNAL EVENTS:
-#
+#_-field updates
 #call when x coordinate has been set
 func _on_set_X(value):
 	controler.update_XCoord(self,value)
@@ -32,17 +32,17 @@ func _on_set_Y(value):
 func _on_set_Angle(value):
 	controler.update_Angle(self,value)
 
-#call when spray cooldown
-func _on_set_SprayCooldown(value):
-	controler.update_SprayCooldown(self,value)
+#call when burst cooldown
+func _on_set_BurstCooldown(value):
+	controler.update_BurstCooldown(self,value)
 
 #call when spread is enabled
 func _on_SpreadEnabled(value):
 	controler.update_SpreadEnabled(self,value)
 
-#call when spray count has been set
-func _on_set_SprayCount(value):
-	controler.update_SprayCount(self,value)
+#call when burst count has been set
+func _on_set_BurstCount(value):
+	controler.update_BurstCount(self,value)
 
 #call when cone angle has been set
 func _on_set_ConeAngle(value):
@@ -64,14 +64,19 @@ func _on_set_AimEnabled(value):
 func _on_set_AimCooldown(value):
 	controler.update_AimCooldown(self,value)
 
-#call when xoffset is set
-func _on_set_XOff(value):
-	controler.update_XOff(self,value)
+#call when aim offset is set
+func _on_set_AimOff(value):
+	controler.update_AimOff(self,value)
 
-#call when yoffset is 
-func _on_set_YOff(value):
-	controler.update_YOff(self,value)
+#call when array count is set
+func _on_set_ArrayCount(value):
+	controler.update_ArrayCount(self,value)
 
+#call when angle between array is set
+func _on_set_ArrayAngle(value):
+	controler.update_ArrayAngle(self,value)
+
+#_-buttons pressed
 #call when emitter load button pressed, pops the load warning
 func _on_Load_emitter():
 	get_node("LoadWarning").popup_centered()
@@ -113,14 +118,14 @@ func set_position_field(position):
 func set_rotation_field(angle):
 	get_node("Menu/Rotation_Input").get_line_edit().text = str(rad2deg(angle))
 
-func set_SprayCooldown(value):
-	get_node("Menu/SprayCooldown_Input").get_line_edit().text = str(value)
+func set_BurstCooldown(value):
+	get_node("Menu/BurstCooldown_Input").get_line_edit().text = str(value)
 
 func set_SpreadEnabled(value):
 	get_node("Menu/Spread_Input").pressed = value
 
-func set_SprayCount(value):
-	get_node("Menu/SprayCount_Input").get_line_edit().text = str(value)
+func set_BurstCount(value):
+	get_node("Menu/BurstCount_Input").get_line_edit().text = str(value)
 
 func set_ConeAngle(value):
 	get_node("Menu/ConeAngle_Input").get_line_edit().text = str(value)
@@ -137,9 +142,14 @@ func set_AimEnabled(value):
 func set_AimCooldown(value):
 	get_node("Menu/Aim_Cooldown_Input").get_line_edit().text = str(value)
 
-func set_aimOffset(value):
-	get_node("Menu/HBoxContainer/Xoffset_Input").get_line_edit().text = str(value.x)
-	get_node("Menu/HBoxContainer2/Yoffset_Input").get_line_edit().text = str(value.y)
+func set_AimOffset(angle):
+	get_node("Menu/Aim_Offset_Input").get_line_edit().text = str(rad2deg(angle))
+
+func set_ArrayCount(value):
+	get_node("Menu/Array_Count_Input").get_line_edit().text = value
+
+func set_ArrayAngle(angle):
+	get_node("Menu/Array_Angle_Input").get_line_edit().text = str(rad2deg(angle))
 
 #_GETTERS:
 func get_position_field():

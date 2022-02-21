@@ -3,10 +3,11 @@ extends Sprite
 #_EDITABLE PARAMS
 var bullet_radius = 10			#radius of bullet hitbox
 var bullet_speed = 100			#speed of bullet
-var bullet_life_span = null		#life span of a single bullet
-var life_time = 10				#how long this bullet has been alive
+var bullet_life_span = 3		#life span of a single bullet
+var life_time = 0				#how long this bullet has been alive
 var collided = false			#has a collision happened
 var player_position				#players current position
+onready var motion_vector = Vector2(cos(self.rotation),sin(self.rotation))*bullet_speed
 
 #_MAIN:
 func _process(delta):
@@ -23,10 +24,7 @@ func _process(delta):
 #param:delta(time between frames)
 #return: null
 func move(delta):
-	var motionVector = Vector2.ONE
-	motionVector.x *= cos(self.rotation)*bullet_speed
-	motionVector.y *= sin(self.rotation)*bullet_speed
-	self.position += motionVector*delta
+	self.position += motion_vector*delta
 	return
 
 #deletes bullet after age exceeded
