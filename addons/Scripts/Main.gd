@@ -1,20 +1,20 @@
 extends Node2D
 
 #_PRELOADS
-#
 var _Emitter = preload("res://addons/Scenes/Editable_Emitter.tscn")		#emitter
 var _Tab = preload("res://addons/Scenes/UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
-var tab_emitter_map = {}				#maps every tab to an emitter
 var emitter_count = 0					#count of created emitters
-onready var editor = find_node("UI").get_node("Editor")	#easy access to editor ui node
-var repositioning_emitter = false		#indicates if repositioning
-var rotating_emitter = false			#indicates if adjusting rotate
 var emitter_editing:Node2D
-var screen_size = OS.get_screen_size()
 var tab_count = 0
+var tab_emitter_map = {}									#maps every tab to an emitter
+var emitter_tab_map = {}									#maps every emitter to a tab
+var repositioning_emitter = false							#indicates if repositioning
+var rotating_emitter = false								#indicates if adjusting rotate
+onready var editor = find_node("UI").get_node("Editor")		#easy access to editor ui node
+var screen_size = OS.get_screen_size()
 
 #_MAIN: 
 #
@@ -64,10 +64,29 @@ func spawn_Editior(emitter):
 	editor.add_child(tab)
 	tab.init(str(tab_count),emitter.name)
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
-	emitter.tab_idx = tab_count#informs emitter that the tab responsible for it is at this index
+	emitter_tab_map[emitter] = tab#adds tab and emitter pair to map
 	editor.current_tab = tab_count#sets editor to the page of the new tab
 	tab_count+=1
 	return tab
+
+#drag and reposition emitter by lerping to mouse positon at rate of 25*delta, triggers on right click
+#param:delta(time between frames)
+#return: null
+func reposition_Emitter(delta):
+	#calculates new position
+	var new_position = lerp(emitter_editing.position,get_global_mouse_position(),25*delta)
+	#clamps values so emitter dosnt go off screen
+	new_position.x = clamp(new_position.x,0,screen_size.x)
+	new_position.y = clamp(new_position.y,0,screen_size.y)
+	emitter_editing.set_position(new_position)
+	emitter_tab_map[emitter_editing].set_Position_field(emitter_editing.get_position())
+
+#adjust rotation of emitter to look at mouse location, triggers on ctrl+right click
+#param:delta(time between frames)
+#return: null
+func rotate_Emitter():
+	emitter_editing.set_angle(get_global_mouse_position())
+	emitter_tab_map[emitter_editing].set_Angle_field(emitter_editing.get_angle())
 
 #handles user input for adjusting an emitter directly
 #param:emitter that is being adjusted, the input event
@@ -81,135 +100,50 @@ func adjustment_Input(emitter,event):
 			repositioning_emitter = false
 			rotating_emitter = true
 
-#drag and reposition emitter by lerping to mouse positon at rate of 25*delta, triggers on right click
-#param:delta(time between frames)
-#return: null
-func reposition_Emitter(delta):
-	#calculates new position
-	var new_position = lerp(emitter_editing.position,get_global_mouse_position(),25*delta)
-	#clamps values so emitter dosnt go off screen
-	new_position.x = clamp(new_position.x,0,screen_size.x)
-	new_position.y = clamp(new_position.y,0,screen_size.y)
-	#assigns
-	emitter_editing.position = new_position
-#	if Input.is_action_just_released("mouse_right"):
-#		repositioning_emitter = false
-
-#adjust rotation of emitter to look at mouse location, triggers on ctrl+right click
-#param:delta(time between frames)
-#return: null
-func rotate_Emitter():
-	emitter_editing.look_at(get_global_mouse_position())
-#	if Input.is_action_just_released("rotate"):
-#		rotating_emitter = false
-
-#_UPDATE VIEW:
-#
-#checks to see if the associated emitter of a tab has been changed directly and 
-#reflects the changes to tab if it has
-#param: tab
-#return: null
-func update_Tab(tab):
-	if(emitter_editing == tab_emitter_map[tab]):
-		if(repositioning_emitter):
-			tab.set_position_field(tab_emitter_map[tab].position)	
-		if(rotating_emitter):
-			tab.set_rotation_field(tab_emitter_map[tab].rotation)
-	return
-
 #_UPDATE MODEL:
 #
-#function to update the x cooridnate of emitter
-#params: tab that was updated and new value
-#return: null
-func update_XCoord(tab,x):
-	tab_emitter_map[tab].position.x = x
-
-#function to update the y cooridnate of emitter
-#params: tab that was updated and new value
-#return: null
-func update_YCoord(tab,y):
-	tab_emitter_map[tab].position.y = y
-
-#function to update the angle of emitter
-#params: tab that was updated and new value
-#return: null
-func update_Angle(tab,deg):
-	tab_emitter_map[tab].set_rotation(deg2rad(deg))
-
-#function to update the burst cooldown of emitter
-#params: tab that was updated and new value
-#return: null
-func update_BurstCooldown(tab,value):
-	tab_emitter_map[tab].burst_cooldown = value
-
-#function to update the spread status of emitter
-#params: tab that was updated and new value
-#return: null
-func update_SpreadEnabled(tab,button_pressed):
-	if(tab_emitter_map[tab].burst_count <=1):
-		tab.get_node("Menu/Spread_Input").pressed = false
-		tab.get_node("SpreadWarning").popup_centered()
-		return
-	tab_emitter_map[tab].spread_enabled = button_pressed
-
-#function to update the burst count of emitter
-#params: tab that was updated and new value
-#return: null
-func update_BurstCount(tab,value):
-	if(tab_emitter_map[tab].spread_enabled==true and value<=1):
-		tab.set_BurstCooldown(tab_emitter_map[tab].burst_count)
-		tab.get_node("SpreadWarning").popup_centered()
-		return
-	tab_emitter_map[tab].burst_count = value
-
-#function to update the burst cone angle of emitter
-#params: tab that was updated and new value
-#return: null
-func update_ConeAngle(tab,value):
-	tab_emitter_map[tab].cone_angle = deg2rad(value)
-
-#function to update the spread width value of emitter
-#params: tab that was updated and new value
-#return: null
+func update_name(tab,value):
+	tab_emitter_map[tab].set_name(value)
+#_-position params
+func update_position(tab,value):
+	tab_emitter_map[tab].set_position(value)
+func update_Angle(tab,value):
+	tab_emitter_map[tab].set_angle(value)
+#_-firing params
+func update_FireRate(tab,value):
+	tab_emitter_map[tab].set_fire_rate(value)
+func update_ClipSize(tab,value):
+	tab_emitter_map[tab].set_clip_size(value)
+func update_ReloadTime(tab,value):
+	tab_emitter_map[tab].set_reload_time(value)
+#_-rotation params
+func update_AngularVelocity(tab,value):
+	tab_emitter_map[tab].set_angular_veloctiy(value)
+func update_AngularAcceleration(tab,value):
+	tab_emitter_map[tab].set_angular_acceleration(value)
+func update_MaxAngularVelocity(tab,value):
+	tab_emitter_map[tab].set_max_angular_velocity(value)
+#_-spread params
+func update_VolleySize(tab,value):
+	tab_emitter_map[tab].set_volley_size(value)
+func update_SpreadAngle(tab,value):
+	tab_emitter_map[tab].set_spread_angle(value)
 func update_SpreadWidth(tab,value):
-	tab_emitter_map[tab].spread_width = value
-
-#function to update the rotation rate of emitter
-#params: tab that was updated and new value
-#return: null
-func update_RotationRate(tab,value):
-	tab_emitter_map[tab].rotation_rate = value
-
-#function to update the aim status of emitter
-#params: tab that was updated and new value
-#return: null
-func update_AimEnabled(tab,button_pressed):
-	tab_emitter_map[tab].aim_enabled = button_pressed
-
-#function to update the aim cooldon value of emitter
-#params: tab that was updated and new value
-#return: null
-func update_AimCooldown(tab,value):
-	tab_emitter_map[tab].aim_pause = value
-
-#function to update the x offset value of emitter
-#params: tab that was updated and new value
-#return: null
-func update_AimOff(tab,value):
-	tab_emitter_map[tab].aim_offset = deg2rad(value)
-
-#function to update the x offset value of emitter
-#params: tab that was updated and new value
-#return: null
+	tab_emitter_map[tab].set_spread_width(value)
+#_-array params
 func update_ArrayCount(tab,value):
-	tab_emitter_map[tab].array_count = value
-
-#function to update the x offset value of emitter
-#params: tab that was updated and new value
-#return: null
+	tab_emitter_map[tab].set_array_count(value)
 func update_ArrayAngle(tab,value):
-	tab_emitter_map[tab].array_angle = deg2rad(value)
+	tab_emitter_map[tab].set_array_angle(value)
+#_-aim params
+func update_AimEnabled(tab,value):
+	tab_emitter_map[tab].set_aim_enabled(value)
+func update_AimPause(tab,value):
+	tab_emitter_map[tab].set_aim_pause(value)
+func update_AimOffset(tab,value):
+	tab_emitter_map[tab].set_aim_offset(value)
+func update_Bullet(tab,value):
+	tab_emitter_map[tab].set_bullet(value)
 
 #function to update the load path of emitter
 #params: tab that was updated and new value
@@ -217,27 +151,44 @@ func update_ArrayAngle(tab,value):
 func load_Selected(tab,path):
 	var emitter = tab_emitter_map[tab]
 	emitter.load_Emitter(path)
-	tab.set_name_field(emitter.name)
-	tab.set_position_field(emitter.position)
-	tab.set_rotation_field(emitter.rotation)
-	tab.set_BurstCooldown(emitter.burst_cooldown)
-	tab.set_SpreadEnabled(emitter.spread_enabled)
-	tab.set_BurstCount(emitter.burst_count)
-	tab.set_ConeAngle(emitter.cone_angle)
-	tab.set_SpreadWidth(emitter.spread_width)
-	tab.set_RotationRate(emitter.rotation_rate)
-	tab.set_AimEnabled(emitter.aim_enabled)
-	tab.set_AimCooldown(emitter.aim_pause)
-	tab.set_AimOffset(emitter.aim_offset)
-	tab.set_ArrayCount(emitter.array_count)
-	tab.set_ArrayAngle(emitter.array_angle)
+	tab.set_Name_field(emitter.get_name())
+	
+	#_-position params
+	tab.set_Position_field(emitter.get_poistion())
+	tab.set_Angle_field(emitter.get_angle())
+	
+	#_-firing param
+	tab.set_FireRate_field(emitter.get_fire_rate())
+	tab.set_ClipSize_field(emitter.get_clip_size())
+	tab.set_ReloadTime_field(emitter.get_reload_time())
+	
+	#_-rotation params
+	tab.set_AngularVelocity_field(emitter.get_angular_veloctiy())
+	tab.set_AngularAcceleration_field(emitter.get_angular_acceleration())
+	tab.set_MaxAngularVelocity_field(emitter.get_max_angular_velocity())
+	
+	#_-spread params
+	tab.set_VolleySize_field(emitter.get_volley_size())
+	tab.set_SpreadAngle_field(emitter.get_spread_angle())
+	tab.set_SpreadWidth_field(emitter.get_spread_width())
+	
+	#_-array params
+	tab.set_ArrayCount_field(emitter.get_array_count())
+	tab.set_ArrayAngle_field(emitter.get_array_angle())
+	
+	#_-aim params
+	tab.set_AimEnabled_field(emitter.get_aim_enabled())
+	tab.set_AimPause_field(emitter.get_aim_pause())
+	tab.set_AimOffset_field(emitter.get_aim_offset())
+	
+	return
 
 #function to update the save path of emitter
 #params: tab that was updated and new value
 #return: null
-func update_savePathSelected(tab,path):
-	print (path)
+func save_File(tab,path):
 	tab_emitter_map[tab].save(path)
+	return
 
 #function to delete the current node
 #params: tab that was updated
@@ -245,3 +196,4 @@ func update_savePathSelected(tab,path):
 func delete_Emitter(tab):
 	tab_emitter_map[tab].queue_free()
 	tab.queue_free()
+	return
