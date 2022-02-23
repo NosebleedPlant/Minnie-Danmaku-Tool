@@ -12,8 +12,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="GridContainer" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_right = 271.0
+margin_bottom = 467.0
 columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -124,16 +124,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SprayCooldown" type="Label" parent="Menu"]
+[node name="BurstCooldown" type="Label" parent="Menu"]
 margin_top = 117.0
 margin_right = 134.0
 margin_bottom = 131.0
-text = "Spray Cooldown "
+text = "Burst Cooldown "
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SprayCooldown_Input" type="SpinBox" parent="Menu"]
+[node name="BurstCooldown_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
 margin_top = 112.0
 margin_right = 271.0
@@ -144,16 +144,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SprayCount" type="Label" parent="Menu"]
+[node name="BurstCount" type="Label" parent="Menu"]
 margin_top = 145.0
 margin_right = 134.0
 margin_bottom = 159.0
-text = "Spray Count"
+text = "Burst Count"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SprayCount_Input" type="SpinBox" parent="Menu"]
+[node name="BurstCount_Input" type="SpinBox" parent="Menu"]
 margin_left = 138.0
 margin_top = 140.0
 margin_right = 271.0
@@ -260,62 +260,73 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu"]
-margin_top = 340.0
+[node name="Aim_Offset" type="Label" parent="Menu"]
+margin_top = 345.0
 margin_right = 134.0
+margin_bottom = 359.0
+text = "Aim Offset"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Aim_Offset_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 340.0
+margin_right = 271.0
 margin_bottom = 364.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="X_Offset" type="Label" parent="Menu/HBoxContainer"]
-margin_top = 5.0
-margin_right = 55.0
-margin_bottom = 19.0
-text = "X Offset:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Xoffset_Input" type="SpinBox" parent="Menu/HBoxContainer"]
-margin_left = 59.0
-margin_right = 133.0
-margin_bottom = 24.0
-max_value = 500.0
+min_value = -360.0
+max_value = 360.0
 step = 0.1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Menu"]
-margin_left = 138.0
-margin_top = 340.0
-margin_right = 271.0
-margin_bottom = 364.0
-
-[node name="Y_Offset" type="Label" parent="Menu/HBoxContainer2"]
-margin_top = 5.0
-margin_right = 54.0
-margin_bottom = 19.0
-text = "Y Offset:"
+[node name="Array_Count" type="Label" parent="Menu"]
+margin_top = 373.0
+margin_right = 134.0
+margin_bottom = 387.0
+text = "Array Count"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Yoffset_Input" type="SpinBox" parent="Menu/HBoxContainer2"]
-margin_left = 58.0
-margin_right = 132.0
-margin_bottom = 24.0
-max_value = 500.0
+[node name="Array_Count_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 368.0
+margin_right = 271.0
+margin_bottom = 392.0
+min_value = -360.0
+max_value = 360.0
+step = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Array_Angle" type="Label" parent="Menu"]
+margin_top = 401.0
+margin_right = 134.0
+margin_bottom = 415.0
+text = "Array Angle"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Array_Angle_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 396.0
+margin_right = 271.0
+margin_bottom = 420.0
+min_value = -360.0
+max_value = 360.0
 step = 0.1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LoadBullet" type="Button" parent="."]
-margin_top = 405.0
+margin_top = 432.75
 margin_right = 92.0
-margin_bottom = 425.0
+margin_bottom = 452.75
 text = "Load Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -323,18 +334,18 @@ __meta__ = {
 
 [node name="LoadExisting" type="Button" parent="."]
 margin_left = 105.0
-margin_top = 405.0
+margin_top = 432.75
 margin_right = 198.0
-margin_bottom = 425.0
+margin_bottom = 452.75
 text = "Load Emitter"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Save" type="Button" parent="."]
-margin_top = 437.0
+margin_top = 464.75
 margin_right = 93.0
-margin_bottom = 457.0
+margin_bottom = 484.75
 rect_pivot_offset = Vector2( -463.865, -159.858 )
 text = "Save Current"
 __meta__ = {
@@ -343,9 +354,9 @@ __meta__ = {
 
 [node name="Delete" type="Button" parent="."]
 margin_left = 105.0
-margin_top = 437.0
+margin_top = 464.75
 margin_right = 197.0
-margin_bottom = 457.0
+margin_bottom = 484.75
 rect_pivot_offset = Vector2( -463.865, -159.858 )
 text = "Delete"
 __meta__ = {
@@ -392,15 +403,16 @@ dialog_text = "Spread requires atleast 2 in Spray Count"
 [connection signal="value_changed" from="Menu/HBoxContainer4/Y_Input" to="." method="_on_set_Y"]
 [connection signal="value_changed" from="Menu/Rotation_Input" to="." method="_on_set_Angle"]
 [connection signal="value_changed" from="Menu/Rotation_Rate_Input" to="." method="_on_set_RotationRate"]
-[connection signal="value_changed" from="Menu/SprayCooldown_Input" to="." method="_on_set_SprayCooldown"]
-[connection signal="value_changed" from="Menu/SprayCount_Input" to="." method="_on_set_SprayCount"]
+[connection signal="value_changed" from="Menu/BurstCooldown_Input" to="." method="_on_set_BurstCooldown"]
+[connection signal="value_changed" from="Menu/BurstCount_Input" to="." method="_on_set_BurstCount"]
 [connection signal="value_changed" from="Menu/ConeAngle_Input" to="." method="_on_set_ConeAngle"]
 [connection signal="value_changed" from="Menu/SpreadWidth_Input" to="." method="_on_set_SpreadWidth"]
 [connection signal="toggled" from="Menu/Spread_Input" to="." method="_on_SpreadEnabled"]
 [connection signal="toggled" from="Menu/Aim_Input" to="." method="_on_set_AimEnabled"]
 [connection signal="value_changed" from="Menu/Aim_Cooldown_Input" to="." method="_on_set_AimCooldown"]
-[connection signal="value_changed" from="Menu/HBoxContainer/Xoffset_Input" to="." method="_on_set_XOff"]
-[connection signal="value_changed" from="Menu/HBoxContainer2/Yoffset_Input" to="." method="_on_set_YOff"]
+[connection signal="value_changed" from="Menu/Aim_Offset_Input" to="." method="_on_set_AimOff"]
+[connection signal="value_changed" from="Menu/Array_Count_Input" to="." method="_on_set_ArrayCount"]
+[connection signal="value_changed" from="Menu/Array_Angle_Input" to="." method="_on_set_ArrayAngle"]
 [connection signal="pressed" from="LoadExisting" to="." method="_on_Load_emitter"]
 [connection signal="pressed" from="Save" to="." method="_on_SaveEmitter"]
 [connection signal="pressed" from="Delete" to="." method="_on_Delete"]
