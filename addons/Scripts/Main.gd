@@ -243,6 +243,5 @@ func update_savePathSelected(tab,path):
 #params: tab that was updated
 #return: null
 func delete_Emitter(tab):
-	print("hi")
 	tab_emitter_map[tab].queue_free()
 	tab.queue_free()
