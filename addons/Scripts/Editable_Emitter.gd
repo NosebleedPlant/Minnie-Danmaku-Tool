@@ -23,9 +23,11 @@ func save(file_path):
 	print("called")
 	var file = File.new()
 	file.open(file_path, File.WRITE)
+	file.store_var(name)
 	file.store_var(position)
 	file.store_var(rotation)
 	file.store_var(bullet_adress)
+	
 	#_-firing params
 	file.store_var(fire_rate)
 	file.store_var(clip_size)
@@ -39,15 +41,15 @@ func save(file_path):
 	file.store_var(volley_size)
 	file.store_var(spread_angle)
 	file.store_var(spread_width)
-
+	
+	#_-array params
+	file.store_var(array_count)
+	file.store_var(array_angle)
+	
 	#_-aim params
 	file.store_var(aim_enabled)
 	file.store_var(aim_pause)
 	file.store_var(aim_offset)
-
-	#_-array params
-	file.store_var(array_count)
-	file.store_var(array_angle)
 
 	file.close()
 	return

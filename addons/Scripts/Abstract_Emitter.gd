@@ -7,7 +7,7 @@ var _Bullet = preload("res://addons/Scenes/Provided Bullets/Bullet.tscn")
 #_EDITABLE PARAMS:
 #_-firing params
 var fire_rate = 0.2					#cooldown between shots
-var clip_size = null				#shots before reload required
+var clip_size = 0					#shots before reload required
 var reload_time = 0.07				#time it takes to roload
 #_-rotation params
 var angular_veloctiy = 0			#rate of eimiter rotaiotn in radians/frame
@@ -17,13 +17,13 @@ var max_angular_velocity = 0		#upper limit to rotation speed after which it flip
 var volley_size = 1					#bulletcount in a single volley
 var spread_angle=0					#spread angle between bullets
 var spread_width=0					#spread width between bullets
+#_-array params
+var array_count = 1
+var array_angle = 0
 #_-aim params
 var aim_enabled = false				#aiming at player
 var aim_pause = 0					#calls to player position per second
 var aim_offset = 0					#offset from player
-#_-array params
-var array_count = 1
-var array_angle = 0
 
 #_GLOBALS:
 onready var player = get_parent().find_node("Player") 		#for easy access to player node
@@ -44,7 +44,7 @@ func _process(delta):
 	aim(delta,player.position) if aim_enabled else rotate(delta)
 	if(cooldown(delta) and reload(delta)):
 		shoot()
-		clip_managment()
+		clip_Managment()
 	return
 
 #_VIRTUAL FUNCTIONS:
@@ -89,7 +89,6 @@ func rotate(delta):
 #return: updated angular velocity
 func accelerate_Rotation(delta):
 	angular_veloctiy += angular_acceleration*delta
-	print(angular_veloctiy)
 	if(abs(angular_veloctiy)>abs(max_angular_velocity)):
 		angular_acceleration*=-1
 	return angular_veloctiy
@@ -109,7 +108,6 @@ func cooldown(delta):
 #param:delta(time between frames)
 #return: boolean
 func reload(delta):
-	print(reload_timer)
 	reload_timer -= delta
 	if(reload_timer<=0):
 		return true
@@ -124,7 +122,7 @@ func shoot():
 		var current_angle= self.rotation+(array*array_angle)
 		var childBullets = []
 		childBullets = instance_Bullet(childBullets,current_angle)
-		childBullets = position_Bullet(childBullets)
+		childBullets = position_Bullet(childBullets,current_angle)
 		childBullets = rotate_Bullet(childBullets)
 		for bullet in childBullets:
 			controler.add_child(bullet)
@@ -144,13 +142,13 @@ func instance_Bullet(childBullets,angle):
 #transforms position of bullet
 #param:array of bullets that are the child of this emitter
 #return: same as above
-func position_Bullet(childBullets):
+func position_Bullet(childBullets,angle):
 	if(volley_size>1):
 		var spread = (spread_width/2)*-1
 		var spread_increment = spread_width/(volley_size-1)
-		var angle = self.rotation+deg2rad(90)
+		var adjusted_angle = angle+deg2rad(90)
 		for bullet in childBullets:
-			var new_pos = Vector2(spread*cos(angle),spread*sin(angle))
+			var new_pos = Vector2(spread*cos(adjusted_angle),spread*sin(adjusted_angle))
 			bullet.translate(new_pos)
 			spread+=spread_increment
 	return childBullets
@@ -170,10 +168,9 @@ func rotate_Bullet(childBullets):
 #checks to see if clip has been emptied forces reload when needed
 #param:null
 #return: null
-func clip_managment():
+func clip_Managment():
 	shot_count += 1
-	if(clip_size!=null and shot_count>=clip_size):
-		print("clip emptied")
+	if(clip_size!=0 and shot_count>=clip_size):
 		shot_count = 0#reload emitter
 		reload_timer = reload_time #start reload wait next frame
 
@@ -184,6 +181,7 @@ func load_Emitter(file_name):
 	var file = File.new()
 	if file.file_exists(file_name):
 		file.open(file_name, File.READ)
+		name = file.get_var()
 		position = file.get_var()
 		rotation = file.get_var()
 
@@ -208,19 +206,28 @@ func load_Emitter(file_name):
 		spread_angle = file.get_var()
 		spread_width = file.get_var()
 		
+		#_-array params
+		array_count = file.get_var()
+		array_angle = file.get_var()
+		
 		#_-aim params
 		aim_enabled = file.get_var()
 		aim_pause = file.get_var()
 		aim_offset = file.get_var()
-		
-		#_-array params
-		array_count = file.get_var()
-		array_angle = file.get_var()
 
 		file.close()
 	return
 
 #_SETTERS:
+func set_name(value):
+	name = value
+func set_position(value):
+	position = value
+func set_angle(value):
+	if(value is Vector2):
+		look_at(value)
+	elif(value is float):
+		rotation = deg2rad(value)
 #_-firing params
 func set_fire_rate(value):
 	fire_rate = value
@@ -230,32 +237,42 @@ func set_reload_time(value):
 	reload_time = value
 #_-rotation params
 func set_angular_veloctiy(value):
-	angular_veloctiy = value
+	angular_veloctiy = deg2rad(value)
 func set_angular_acceleration(value):
-	angular_acceleration = value
+	angular_acceleration = deg2rad(value)
 func set_max_angular_velocity(value):
-	max_angular_velocity = value
+	max_angular_velocity = deg2rad(value)
 #_-spread params
 func set_volley_size(value):
 	volley_size = value
 func set_spread_angle(value):
-	spread_angle = value
+	spread_angle = deg2rad(value)
 func set_spread_width(value):
 	spread_width = value
+#_-array params
+func set_array_count(value):
+	array_count = value
+func set_array_angle(value):
+	array_angle = deg2rad(value)
 #_-aim params
 func set_aim_enabled(value):
 	aim_enabled = value
 func set_aim_pause(value):
 	aim_pause = value
 func set_aim_offset(value):
-	aim_offset = value
-#_-array params
-func set_array_count(value):
-	array_count = value
-func set_array_angle(value):
-	array_angle = value
+	aim_offset = deg2rad(value)
+func set_bullet(path):
+	bullet_adress = path
+	_Bullet = load(path)
 
 #_GETTERS:
+func get_name():
+	return name
+func get_poistion():
+	return position
+func get_angle():
+	return rotation
+#_-firing params
 func get_fire_rate():
 	return fire_rate
 func get_clip_size():
@@ -276,6 +293,11 @@ func get_spread_angle():
 	return spread_angle
 func get_spread_width():
 	return spread_width
+#_-array params
+func get_array_count():
+	return array_count
+func get_array_angle():
+	return array_angle
 #_-aim params
 func get_aim_enabled():
 	return aim_enabled
@@ -283,8 +305,3 @@ func get_aim_pause():
 	return aim_pause
 func get_aim_offset():
 	return aim_offset
-#_-array params
-func get_array_count():
-	return array_count
-func get_array_angle():
-	return array_angle
