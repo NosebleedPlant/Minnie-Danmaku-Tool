@@ -2,6 +2,7 @@
 The scripts are available in the "Scripts" folder feel free to edit them to suit your needs, below I provide basic documentation. Note the GUI editor uses degrees but all the angles under the hood are in radians.
 
 ## Classes:
+
 | Classes     | Description |
 | ---                  | --- |
 | Main                 | Primary script that manages the interactions between user and system|
