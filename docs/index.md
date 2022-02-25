@@ -3,6 +3,7 @@ The scripts are available in the "Scripts" folder feel free to edit them to suit
 
 ## Classes:
 
+
 | Classes     | Description |
 | ---                  | --- |
 | Main                 | Primary script that manages the interactions between user and system|
@@ -12,6 +13,7 @@ The scripts are available in the "Scripts" folder feel free to edit them to suit
 | Editable_Emitter     | Implementation of Abstract_Emitter; setup to allow editing from GUI and saving created patterns. Meant to be used in creating enviorment|
 | Prefab_Emitter       | Implemenataion of Abstract_Emitter; setup to load emitter data on start up and is meant to be used in your actual gamess|
 | Tab                  | GUI backbone script; is responsible for handling GUI updates in editor|
+
 
 ## Main:
 
@@ -109,8 +111,7 @@ An abstract class for emitter that the editable emitter and prefab emitter inher
 ```
 param:delta between frames
 return:none
-calls movement and bound handling functions. Also calls the aim or rotate functions based on enabled flags. When not reloading or
-on shot cooldown it calls the shoot function and checks magizine via clip management fucntion.
+calls movement and bound handling functions. Also calls the aim or rotate functions based on enabled flags. When not reloading or on shot cooldown it calls the shoot function and checks magizine via clip management fucntion.
 ```
 
 **_move():**
@@ -225,8 +226,7 @@ saves the attributes of the emitter to a file
 ```
 param:input event;other 2 unused
 return:none
-event triggered by signal when input occurs in area of emitter; used primaily to norify Main that this editor is being manipulated
-by user
+event triggered by signal when input occurs in area of emitter; used primaily to norify Main that this editor is being manipulated by user
 ```
 
 **_bound_Handler()**
