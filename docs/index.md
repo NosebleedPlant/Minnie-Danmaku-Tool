@@ -5,13 +5,13 @@ The scripts are available in the "Scripts" folder feel free to edit them to suit
 
 | Attribute     | Description |
 | ---               | --- |
-| Main         | Primary script that manages the interactions between user and system|
-| Player                | Rudamentary player controler script|
-| Default_Bullet             | Basic bullet script|
-| Abstract_Emitter             | Abstract emitter class that contains major functionality for all emitters| 
-| Editable_Emitter           | Implementation of Abstract_Emitter; setup to allow editing from GUI and saving created patterns. Meant to be used in creating enviorment|
-| Prefab_Emitter      | Implemenataion of Abstract_Emitter; setup to load emitter data on start up and is meant to be used in your actual games|
-| Tab  | GUI backbone script; is responsible for handling GUI updates in editor|
+| Main              | Primary script that manages the interactions between user and system|
+| Player            | Rudamentary player controler script|
+| Default_Bullet    | Basic bullet script|
+| Abstract_Emitter  | Abstract emitter class that contains major functionality for all emitters| 
+| Editable_Emitter  | Implementation of Abstract_Emitter; setup to allow editing from GUI and saving created patterns. Meant to be used in creating enviorment|
+| Prefab_Emitter    | Implemenataion of Abstract_Emitter; setup to load emitter data on start up and is meant to be used in your actual games|
+| Tab               | GUI backbone script; is responsible for handling GUI updates in editor|
 
 ## Main:
 
