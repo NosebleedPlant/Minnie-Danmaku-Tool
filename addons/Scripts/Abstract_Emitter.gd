@@ -8,7 +8,7 @@ var _Bullet = preload("res://addons/Scenes/Provided Bullets/Bullet.tscn")
 #_-firing params
 var fire_rate = 0.2					#cooldown between shots
 var clip_size = 0					#shots before reload required
-var reload_time = 0.07				#time it takes to roload
+var reload_time = 0					#time it takes to roload
 #_-rotation params
 var angular_veloctiy = 0			#rate of eimiter rotaiotn in radians/frame
 var angular_acceleration = 0		#rate at which the rotation speed changes
@@ -97,6 +97,7 @@ func accelerate_Rotation(delta):
 #param:delta(time between frames)
 #return: boolean
 func cooldown(delta):
+	#uses seconds per bullet notaion for fire rate because it makes it easier to manage time
 	shot_timer += delta
 	if(shot_timer>=fire_rate):
 		shot_timer = 0
@@ -136,6 +137,7 @@ func instance_Bullet(childBullets,angle):
 		var bullet = _Bullet.instance()
 		bullet.position = self.position
 		bullet.rotation = angle
+		bullet.add_to_group("bullets")
 		childBullets.append(bullet)
 	return childBullets
 
@@ -144,11 +146,11 @@ func instance_Bullet(childBullets,angle):
 #return: same as above
 func position_Bullet(childBullets,angle):
 	if(volley_size>1):
-		var spread = (spread_width/2)*-1
-		var spread_increment = spread_width/(volley_size-1)
-		var adjusted_angle = angle+deg2rad(90)
+		var spread = (spread_width/2)*-1 #calculates right most point
+		var spread_increment = spread_width/(volley_size-1)#claculates space between 2 bullets
+		var adjusted_angle = angle+deg2rad(90)#adjusts the angle to account for godot 0 starting parrallel to x axis
 		for bullet in childBullets:
-			var new_pos = Vector2(spread*cos(adjusted_angle),spread*sin(adjusted_angle))
+			var new_pos = Vector2(spread*cos(adjusted_angle),spread*sin(adjusted_angle))#calculates new position
 			bullet.translate(new_pos)
 			spread+=spread_increment
 	return childBullets
@@ -158,8 +160,8 @@ func position_Bullet(childBullets,angle):
 #return: same as above
 func rotate_Bullet(childBullets):
 	if(volley_size>1):
-		var spread_angle_increment = spread_angle/(volley_size-1)
-		var curr_angle = (spread_angle/2)*-1
+		var spread_angle_increment = spread_angle/(volley_size-1)#calculates the right most angle
+		var curr_angle = (spread_angle/2)*-1#calculates angle between 2 bullets
 		for bullet in childBullets:
 			bullet.rotation += curr_angle
 			curr_angle+=spread_angle_increment
@@ -173,6 +175,7 @@ func clip_Managment():
 	if(clip_size!=0 and shot_count>=clip_size):
 		shot_count = 0#reload emitter
 		reload_timer = reload_time #start reload wait next frame
+	return
 
 #load the params for emitter
 #param:save file name
@@ -221,8 +224,10 @@ func load_Emitter(file_name):
 #_SETTERS:
 func set_name(value):
 	name = value
-func set_position(value):
-	position = value
+func set_position_x(value):
+	position.x = value
+func set_position_y(value):
+	position.y = value
 func set_angle(value):
 	if(value is Vector2):
 		look_at(value)

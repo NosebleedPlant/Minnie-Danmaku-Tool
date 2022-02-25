@@ -13,6 +13,8 @@ var tab_emitter_map = {}									#maps every tab to an emitter
 var emitter_tab_map = {}									#maps every emitter to a tab
 var repositioning_emitter = false							#indicates if repositioning
 var rotating_emitter = false								#indicates if adjusting rotate
+onready var player = find_node("Player")					#easy acess to player node
+onready var main_tree = get_tree()							#easy acess to scene tree
 onready var editor = find_node("UI").get_node("Editor")		#easy access to editor ui node
 var screen_size = OS.get_screen_size()
 
@@ -38,6 +40,7 @@ func _unhandled_input(event):
 func _process(delta):
 	if repositioning_emitter: reposition_Emitter(delta)
 	if rotating_emitter: rotate_Emitter()
+	main_tree.call_group("bullets","set_PlayerPosition",player.position)
 	return
 
 #_HELPER FUNCTIONS:
@@ -62,7 +65,7 @@ func spawn_Editior(emitter):
 		editor.set_visible(true)
 	tab = _Tab.instance()
 	editor.add_child(tab)
-	tab.init(str(tab_count),emitter.name)
+	tab.init(tab_count,emitter.get_name(),emitter.get_position(),emitter.get_fire_rate(),emitter.get_volley_size(),emitter.get_array_count())
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
 	emitter_tab_map[emitter] = tab#adds tab and emitter pair to map
 	editor.current_tab = tab_count#sets editor to the page of the new tab
@@ -102,11 +105,13 @@ func adjustment_Input(emitter,event):
 
 #_UPDATE MODEL:
 #
-func update_name(tab,value):
+func update_Name(tab,value):
 	tab_emitter_map[tab].set_name(value)
 #_-position params
-func update_position(tab,value):
-	tab_emitter_map[tab].set_position(value)
+func update_PositionX(tab,value):
+	tab_emitter_map[tab].set_position_y(value)
+func update_PositionY(tab,value):
+	tab_emitter_map[tab].set_position_x(value)
 func update_Angle(tab,value):
 	tab_emitter_map[tab].set_angle(value)
 #_-firing params
