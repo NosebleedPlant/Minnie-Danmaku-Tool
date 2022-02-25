@@ -106,7 +106,10 @@ An abstract class for emitter that the editable emitter and prefab emitter inher
 
 **_process(delta):**
 ```
-calls movement and bound handling functions. Also calls the aim or rotate functions based on enabled flags. When not reloading or on shot cooldown it calls the shoot function and checks magizine via clip management fucntion.
+param:delta between frames
+return:none
+calls movement and bound handling functions. Also calls the aim or rotate functions based on enabled flags. When not reloading or
+on shot cooldown it calls the shoot function and checks magizine via clip management fucntion.
 ```
 
 **_move():**
@@ -221,7 +224,8 @@ saves the attributes of the emitter to a file
 ```
 param:input event;other 2 unused
 return:none
-event triggered by signal when input occurs in area of emitter; used primaily to norify Main that this editor is being manipulated by user
+event triggered by signal when input occurs in area of emitter; used primaily to norify Main that this editor is being manipulated
+by user
 ```
 
 **_bound_Handler()**
