@@ -6,19 +6,23 @@ onready var controler = get_tree().get_root().get_child(0)
 #INITALIZATION METHOD:
 #
 #initalizes the emitter before it enters scnee
-func init(idx,emitter_name):
+func init(idx,emitter_name,position,fire_rate,volley_size,array_count):
 	self.name = str(idx)#set name
 	set_Name_field(emitter_name)#set name feild
+	set_Position_field(position)
+	set_FireRate_field(fire_rate)
+	set_VolleySize_field(volley_size)
+	set_ArrayCount_field(array_count)
 
 #_FIELD UPDATE EVENTS:
 #
 func on_set_name(value):
-	controler.update_name(self,value)
+	controler.update_Name(self,value)
 #_-position params
 func on_set_X(value):
-	controler.update_position(self,Vector2(value,0))
+	controler.update_PositionY(self,value)
 func on_set_Y(value):
-	controler.update_YCoord(self,Vector2(0,value))
+	controler.update_PositionX(self,value)
 func on_set_Angle(value):
 	controler.update_Angle(self,value)
 #_-firing params
