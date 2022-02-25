@@ -6,7 +6,7 @@ var _Tab = preload("res://addons/Scenes/UI/Tab.tscn")					#tab in editor
 
 #_GLOBALS:
 #
-var emitter_count = 0					#count of created emitters
+var emitter_count = 0										#count of created emitters
 var emitter_editing:Node2D
 var tab_count = 0
 var tab_emitter_map = {}									#maps every tab to an emitter

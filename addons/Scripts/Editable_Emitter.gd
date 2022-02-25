@@ -4,8 +4,7 @@ extends "res://addons/Scripts/Abstract_Emitter.gd"
 #_EXTENSIONS:
 ###############################################################################
 #_EXTRA VARIABLES:
-var tab_idx = 0
-var screen_size = OS.get_screen_size()
+var screen_size = OS.get_screen_size()	#stores screen size to check if in frame
 
 #_HELPER FUNCTIONS:
 #
@@ -15,6 +14,7 @@ var screen_size = OS.get_screen_size()
 func init(pos,name_str):
 	self.position = pos
 	self.name = name_str
+	return
 
 #save the params for emitter
 #param:save file name
