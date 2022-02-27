@@ -1,7 +1,6 @@
 extends Node2D
 
 #_PRELOADS:
-var bullet_adress:String = "res://addons/Scenes/Provided Bullets/Bullet.tscn"
 var _Bullet = preload("res://addons/Scenes/Provided Bullets/Bullet.tscn")
 
 #_EDITABLE PARAMS:
@@ -24,6 +23,10 @@ var array_angle = 0
 var aim_enabled = false				#aiming at player
 var aim_pause = 0					#calls to player position per second
 var aim_offset = 0					#offset from player
+#-params bullet
+var bullet_adress:String = "res://addons/Scenes/Provided Bullets/Bullet.tscn"
+var bullet_speed = 100
+var bullet_lifespan = 0
 
 #_GLOBALS:
 onready var player = get_parent().find_node("Player") 		#for easy access to player node
@@ -135,8 +138,7 @@ func shoot():
 func instance_Bullet(childBullets,angle):
 	for i in volley_size:
 		var bullet = _Bullet.instance()
-		bullet.position = self.position
-		bullet.rotation = angle
+		bullet.init(self.position,angle,bullet_speed,bullet_lifespan)
 		bullet.add_to_group("bullets")
 		childBullets.append(bullet)
 	return childBullets
@@ -187,12 +189,6 @@ func load_Emitter(file_name):
 		name = file.get_var()
 		position = file.get_var()
 		rotation = file.get_var()
-
-		#load the new bullet
-		bullet_adress = file.get_var()
-		var directory = Directory.new();
-		if directory.file_exists(bullet_adress):
-			_Bullet = load(bullet_adress)
 		
 		#_-firing params
 		fire_rate = file.get_var()
@@ -217,6 +213,16 @@ func load_Emitter(file_name):
 		aim_enabled = file.get_var()
 		aim_pause = file.get_var()
 		aim_offset = file.get_var()
+		
+		#_-bullet params
+		#load the new bullet
+		bullet_adress = file.get_var()
+		var directory = Directory.new();
+		if directory.file_exists(bullet_adress):
+			_Bullet = load(bullet_adress)
+			
+		bullet_speed = file.get_var()
+		bullet_lifespan = file.get_var()
 
 		file.close()
 	return
@@ -266,9 +272,14 @@ func set_aim_pause(value):
 	aim_pause = value
 func set_aim_offset(value):
 	aim_offset = deg2rad(value)
+#_-bullet params
 func set_bullet(path):
 	bullet_adress = path
 	_Bullet = load(path)
+func set_bullet_speed(value):
+	bullet_speed = value
+func set_bullet_lifespan(value):
+	bullet_lifespan = value
 
 #_GETTERS:
 func get_name():
@@ -310,3 +321,8 @@ func get_aim_pause():
 	return aim_pause
 func get_aim_offset():
 	return aim_offset
+#_-bullet params
+func get_bullet_speed():
+	return bullet_speed
+func get_bullet_lifespan():
+	return bullet_lifespan

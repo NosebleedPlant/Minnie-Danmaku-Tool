@@ -1,22 +1,31 @@
 extends Sprite
 
 #_EDITABLE PARAMS
-var bullet_speed = 100			#speed of bullet
-var bullet_life_span = 3		#life span of a single bullet
+var bullet_speed = 0			#speed of bullet
+var bullet_life_span = 0		#life span of a single bullet
 
 #_GLOBALS
 var life_time = 0				#how long this bullet has been alive
-var bullet_radius = 10			#radius of bullet hitbox
+var bullet_radius = 0			#radius of bullet hitbox
 var collided = false			#has a collision happened
 var player_position				#players current position
 
 #_GLOBALS
 onready var motion_vector = Vector2(cos(self.rotation),sin(self.rotation))*bullet_speed		#precomputes motion vector to avoid trig computation every frame 
 
+#INITALIZATION METHOD:
+#
+#initalizes the bullet before it enters scene
+func init(pos,angle,speed,lifespan):
+	self.position = pos
+	self.rotation = angle
+	bullet_speed = speed
+	bullet_life_span = lifespan
+
 #_MAIN:
 func _process(delta):
 	move(delta)
-	if(bullet_life_span):
+	if(bullet_life_span!=0):
 		age(delta)
 	if(player_position):
 		collision_Detection(player_position)

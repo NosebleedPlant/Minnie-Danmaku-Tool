@@ -403,11 +403,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BulletSpeed" type="Label" parent="Menu"]
+margin_top = 497.0
+margin_right = 134.0
+margin_bottom = 511.0
+text = "Bullet Speed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletSpeed_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 492.0
+margin_right = 271.0
+margin_bottom = 516.0
+hint_tooltip = "Angle that aim is offset from player"
+max_value = 1000.0
+step = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletLifespan" type="Label" parent="Menu"]
+margin_top = 525.0
+margin_right = 134.0
+margin_bottom = 539.0
+text = "Bullet Lifespan"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletLifespan_Input" type="SpinBox" parent="Menu"]
+margin_left = 138.0
+margin_top = 520.0
+margin_right = 271.0
+margin_bottom = 544.0
+hint_tooltip = "Angle that aim is offset from player"
+max_value = 1000.0
+step = 0.1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="LoadExisting" type="Button" parent="."]
 margin_left = 105.0
-margin_top = 526.714
+margin_top = 558.714
 margin_right = 198.0
-margin_bottom = 546.714
+margin_bottom = 578.714
 text = "Load Emitter"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -430,9 +472,9 @@ current_dir = "res://addons/Saves"
 current_path = "res://addons/Saves/"
 
 [node name="LoadBullet" type="Button" parent="."]
-margin_top = 526.714
+margin_top = 558.714
 margin_right = 92.0
-margin_bottom = 546.714
+margin_bottom = 578.714
 text = "Load Bullet"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -447,9 +489,9 @@ current_dir = "res://addons/Saves"
 current_path = "res://addons/Saves/"
 
 [node name="Save" type="Button" parent="."]
-margin_top = 558.714
+margin_top = 590.714
 margin_right = 93.0
-margin_bottom = 578.714
+margin_bottom = 610.714
 rect_pivot_offset = Vector2( -463.865, -159.858 )
 text = "Save Current"
 __meta__ = {
@@ -465,9 +507,9 @@ current_path = "res://addons/Saves/SaveDialog"
 
 [node name="Delete" type="Button" parent="."]
 margin_left = 105.0
-margin_top = 558.714
+margin_top = 590.714
 margin_right = 197.0
-margin_bottom = 578.714
+margin_bottom = 610.714
 rect_pivot_offset = Vector2( -463.865, -159.858 )
 text = "Delete"
 __meta__ = {
@@ -487,7 +529,7 @@ margin_right = 83.0
 margin_bottom = 58.0
 dialog_text = "Invalid Input"
 
-[connection signal="text_entered" from="Menu/Name_Input" to="." method="on_set_name"]
+[connection signal="text_entered" from="Menu/Name_Input" to="." method="on_set_Name"]
 [connection signal="value_changed" from="Menu/HBoxContainer3/X_Input" to="." method="on_set_X"]
 [connection signal="value_changed" from="Menu/HBoxContainer4/Y_Input" to="." method="on_set_Y"]
 [connection signal="value_changed" from="Menu/Angle_Input" to="." method="on_set_Angle"]
@@ -505,6 +547,8 @@ dialog_text = "Invalid Input"
 [connection signal="toggled" from="Menu/AimEnabled_Input" to="." method="on_set_AimEnabled"]
 [connection signal="value_changed" from="Menu/AimPause_Input" to="." method="on_set_AimPause"]
 [connection signal="value_changed" from="Menu/AimOffset_Input" to="." method="on_set_AimOffset"]
+[connection signal="value_changed" from="Menu/BulletSpeed_Input" to="." method="on_set_BulletSpeed"]
+[connection signal="value_changed" from="Menu/BulletLifespan_Input" to="." method="on_set_BulletLifespan"]
 [connection signal="pressed" from="LoadExisting" to="." method="on_LoadEmitter"]
 [connection signal="confirmed" from="LoadWarning" to="." method="on_acceptLoadWarning"]
 [connection signal="file_selected" from="LoadDialog" to="." method="on_loadSelected"]

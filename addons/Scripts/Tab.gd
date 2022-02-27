@@ -6,17 +6,18 @@ onready var controler = get_tree().get_root().get_child(0)
 #INITALIZATION METHOD:
 #
 #initalizes the emitter before it enters scnee
-func init(idx,emitter_name,position,fire_rate,volley_size,array_count):
+func init(idx,emitter_name,position,fire_rate,volley_size,array_count,bullet_speed,bullet_lifespan):
 	self.name = str(idx)#set name
 	set_Name_field(emitter_name)#set name feild
-	set_Position_field(position)
-	set_FireRate_field(fire_rate)
-	set_VolleySize_field(volley_size)
-	set_ArrayCount_field(array_count)
-
-#_FIELD UPDATE EVENTS:
+	set_Position_field(position)#set position field with starting position
+	set_FireRate_field(fire_rate)#set fire rate field with starting fire rate
+	set_VolleySize_field(volley_size)#set volley size field with starting volley size
+	set_ArrayCount_field(array_count)#set array count with starting array count
+	set_BulletSpeed_field(bullet_speed)#set bullet speed field with starting value
+	set_BulletLifespan_field(bullet_lifespan)#set bullet lifespan field with starting value
+#_FIELD UPDATE SIGNAL EVENTS:
 #
-func on_set_name(value):
+func on_set_Name(value):
 	controler.update_Name(self,value)
 #_-position params
 func on_set_X(value):
@@ -58,6 +59,11 @@ func on_set_AimPause(value):
 	controler.update_AimPause(self,value)
 func on_set_AimOffset(value):
 	controler.update_AimOffset(self,value)
+#_-bullet params
+func on_set_BulletSpeed(value):
+	controler.update_BulletSpeed(self,value)
+func on_set_BulletLifespan(value):
+	controler.update_BulletLifespan(self,value)
 
 #_BUTTON PRESS EVENTS:
 #call when emitter load button pressed, pops the load warning
@@ -140,3 +146,9 @@ func set_AimPause_field(value):
 	get_node("Menu/AimPause_Input").get_line_edit().text = str(value)
 func set_AimOffset_field(value):
 	get_node("Menu/AimOffset_Input").get_line_edit().text = str(rad2deg(value))
+#_-bullet params
+func set_BulletSpeed_field(value):
+	get_node("Menu/BulletSpeed_Input").get_line_edit().text = str(value)
+func set_BulletLifespan_field(value):
+	get_node("Menu/BulletLifespan_Input").get_line_edit().text = str(rad2deg(value))
+

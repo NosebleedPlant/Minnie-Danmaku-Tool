@@ -26,7 +26,6 @@ func save(file_path):
 	file.store_var(name)
 	file.store_var(position)
 	file.store_var(rotation)
-	file.store_var(bullet_adress)
 	
 	#_-firing params
 	file.store_var(fire_rate)
@@ -50,7 +49,12 @@ func save(file_path):
 	file.store_var(aim_enabled)
 	file.store_var(aim_pause)
 	file.store_var(aim_offset)
-
+	
+	#_-bullet params
+	file.store_var(bullet_adress)
+	file.store_var(bullet_speed)
+	file.store_var(bullet_lifespan)
+	
 	file.close()
 	return
 

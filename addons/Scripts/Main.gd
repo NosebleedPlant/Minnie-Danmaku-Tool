@@ -18,19 +18,24 @@ onready var main_tree = get_tree()							#easy acess to scene tree
 onready var editor = find_node("UI").get_node("Editor")		#easy access to editor ui node
 var screen_size = OS.get_screen_size()
 
+#_INPUT BINDINGS:
+var input_spawn = "mouse_left"
+var input_adjust = "mouse_right"
+var input_rotate = "rotate"
+
 #_MAIN: 
 #
 # handles user input
 # param: input event
 # return: null
 func _unhandled_input(event):
-	if event.is_action_pressed("mouse_left"):
+	if event.is_action_pressed(input_spawn):
 		var emitter = spawn_Emitter()#create new emitter at location of right click
 		var tab = spawn_Editior(emitter)#create tabs in editor for each new emitter spawned
-	if event.is_action_released("mouse_right"):
+	if event.is_action_released(input_adjust):
 		repositioning_emitter = false
 		rotating_emitter = false
-	if event.is_action_released("rotate"):
+	if event.is_action_released(input_rotate):
 		rotating_emitter = false
 
 # calls adjustment functions when needed
@@ -65,7 +70,9 @@ func spawn_Editior(emitter):
 		editor.set_visible(true)
 	tab = _Tab.instance()
 	editor.add_child(tab)
-	tab.init(tab_count,emitter.get_name(),emitter.get_position(),emitter.get_fire_rate(),emitter.get_volley_size(),emitter.get_array_count())
+	tab.init(emitter_count,emitter.get_name(),emitter.get_position(),
+			emitter.get_fire_rate(),emitter.get_volley_size(),emitter.get_array_count(),
+			emitter.get_bullet_speed(),emitter.get_bullet_lifespan())
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
 	emitter_tab_map[emitter] = tab#adds tab and emitter pair to map
 	editor.current_tab = tab_count#sets editor to the page of the new tab
@@ -95,11 +102,11 @@ func rotate_Emitter():
 #param:emitter that is being adjusted, the input event
 #return: null
 func adjustment_Input(emitter,event):
-	if event.is_action_pressed("mouse_right"):
+	if event.is_action_pressed(input_adjust):
 		repositioning_emitter = true
 		emitter_editing = emitter
-		editor.current_tab = emitter.tab_idx
-		if Input.is_action_pressed("rotate"):
+		editor.current_tab = int(emitter_tab_map[emitter].name)
+		if Input.is_action_pressed(input_rotate):
 			repositioning_emitter = false
 			rotating_emitter = true
 
@@ -147,8 +154,13 @@ func update_AimPause(tab,value):
 	tab_emitter_map[tab].set_aim_pause(value)
 func update_AimOffset(tab,value):
 	tab_emitter_map[tab].set_aim_offset(value)
+#_-bullet params
 func update_Bullet(tab,value):
 	tab_emitter_map[tab].set_bullet(value)
+func update_BulletSpeed(tab,value):
+	tab_emitter_map[tab].set_bullet_speed(value)
+func update_BulletLifespan(tab,value):
+	tab_emitter_map[tab].set_bullet_lifespan(value)
 
 #function to update the load path of emitter
 #params: tab that was updated and new value
@@ -186,6 +198,10 @@ func load_Selected(tab,path):
 	tab.set_AimPause_field(emitter.get_aim_pause())
 	tab.set_AimOffset_field(emitter.get_aim_offset())
 	
+	#_-bullet params
+	tab.set_AimEnabled_field(emitter.get_bullet_speed())
+	tab.set_AimPause_field(emitter.get_bullet_lifespan())
+	
 	return
 
 #function to update the save path of emitter
@@ -201,4 +217,5 @@ func save_File(tab,path):
 func delete_Emitter(tab):
 	tab_emitter_map[tab].queue_free()
 	tab.queue_free()
+	tab_count-=1
 	return
