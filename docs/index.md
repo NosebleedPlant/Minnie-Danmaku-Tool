@@ -29,7 +29,7 @@ The main control class that acts as the glue between the user interface and the 
 | repositioning_emitter   | flag that indicates user is repostioning an emitter|
 | rotating_emitter        | flag that indicates user is rotating an emitter|
 | player                  | reference to player scene|
-| main_tree               | easy access to scene tree|
+| main_tree               | easy access to scene tree| 
 | editor                  | reference to editor scene|
 | screen_size             | stores the screen size|
 | input_spawn             | string identification of key_binding used to spawn emitters|
