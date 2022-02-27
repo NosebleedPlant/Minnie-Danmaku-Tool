@@ -1,4 +1,4 @@
-# Mini-Danmaku-Tool
+# Minnie-Danmaku-Tool
 **Status:** Close to completion
 
 **Documentation Here:** https://nosebleedplant.github.io/Mini-Danmaku-Tool/
