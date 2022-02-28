@@ -15,7 +15,7 @@ The scripts are available in the "Scripts" folder feel free to edit them to suit
 
 ## Main:
 
-The main control class that acts as the glue between the user interface and the emitter.
+The main control class that acts as the glue between the user interface and the emitter. The emitter being used has been exported to the inspector so you can swap in one that you have customized if you so desire
 
 | Attribute     | Description |
 | ---               | --- |
