@@ -15,6 +15,98 @@ The scripts are available in the "Scripts" folder feel free to edit them to suit
 
 ## Main:
 
+The main control class that acts as the glue between the user interface and the emitter.
+
+| Attribute     | Description |
+| ---               | --- |
+| Emitter                 | preloaded Emitter scene|
+| Tab                     | preloade Tab scene|
+| emitter_count           | count of emitters that have been spawned|
+| emitter_editing         | refence to emitter currently being editted by user|
+| tab_count               | count of tabs that have been spawned|
+| tab_emitter_map         | dictionary that maps tabs to their emitters|
+| emitter_tab_map         | dictionary that maps emitters to their tabs|
+| repositioning_emitter   | flag that indicates user is repostioning an emitter|
+| rotating_emitter        | flag that indicates user is rotating an emitter|
+| player                  | reference to player scene|
+| main_tree               | easy access to scene tree| 
+| editor                  | reference to editor scene|
+| screen_size             | stores the screen size|
+| input_spawn             | string identification of key_binding used to spawn emitters|
+| input_adjust            | string identification of key_binding used to reposition emitters|
+| input_rotate            | string identification of key_binding used to rotate emitters|
+
+### methods:
+
+**_unhandled_input(event):**
+```
+params:input event that occured
+return:none
+Handles the user input to spawn an emitter. Checks to see when user stops adjusting emitter and disables repostion and rotation flags accordingly
+```
+**_process(delta):**
+```
+params:delta between frames
+return:none
+calls repositiong and rotation function according to set flags. Sends player position information to all bullets for collision detection.
+```
+**spawn_Emitter():**
+```
+params:none
+return:emitter
+instantiates an emitter at the location of mouse click.
+```
+**spawn_Editior():**
+```
+params:none
+return:tab
+instantiates an editor tab that will correspond to the emitter that was just spawned.
+```
+**reposition_Emitter():**
+```
+params:none
+return:none
+lerps the emitter position to mouse allowing for drag to reposition.
+```
+**rotate_Emitter():**
+```
+params:none
+return:none
+rotates the emitter to look at the mouse position
+```
+**adjustment_Input():**
+```
+params:emitter being adjusted, input event triggered
+return:none
+based on input event enables rotation and reposition flags, sets the reference for emitter being adjusted 
+```
+**update_Param():**
+```
+params:tab,value
+return: none
+this is a collective documentation for a set of functions that look like "update_Name(tab,value)","update_PositionX(tab,value)" etc.
+Functions call the emitter corresponding setters with the value provided for emitters that the tab provided is responsible for.
+```
+**load_Selected():**
+```
+params:tab,path of emitter to be loaded
+return:none
+calls the load emitter function on the emitter that the provided tab is responsible for. It then proceeds to update the fields with the loaded values of the emitter.
+```
+**save_File():**
+```
+params:tab,path to save emitter in
+return:none
+saves the parameters of the emitter that this tab is responsible for by calling the save() function with the path provided
+```
+**delete_Emitter():**
+```
+params:tab
+return:none
+Godot's tab system is a bit wonkey so this function is somewhat of a comprimise. The fucntion deletes the emitter that the provided tab is responsible for but only hides the tab itsef. Why the tab is only hidden is a long story but it works and you are welcome to change it if needed.
+```
+
+
 ## Player:
 
 A basic player class to serve as a test dummy for aiming at. Its very rudamentary.
@@ -31,7 +123,7 @@ Called every frame. Maps the player position to the mouse position
 
 ## Default_Bullet:
 
-A basic bullet class. It has rudamentary point on circle collision detection. I deliberatly left this very bare_bones so that you can set it as u see if in order to optamize performance and balance you needs. I would suggest inhereting and overriding if you want to expand on this class but it should be fine to make one from scratch as long as you include set_PlayerPosition() function in ur new class. Also note; collisions will not work outside addon enviorment since the player position is updated via group calls in main scene for the sake of efficency(atleast i think its better?).
+A basic bullet class. It has rudamentary point on circle collision detection. I deliberatly left this very bare bones so that you can edit it as u see fit if in order to optamize performance and balance you need. I would suggest inhereting and overriding if you want to expand on this class but it should be fine to make one from scratch as long as you include set_PlayerPosition() function in ur new class. Also note; collisions will not work outside addon enviorment since its best to tailor those to the performance needs of your game.
 
 | Attribute     | Description |
 | ---               | --- |
@@ -59,6 +151,8 @@ moves position of bullet
 ```
 **age(delta):**
 ```
+param:delta between frames
+return:none
 increases the age of the bullet, if the lifespan is reached it frees the bullet.
 ```
 **collision_Detection(playerVec:Vector2)**
@@ -80,7 +174,6 @@ An abstract class for emitter that the editable emitter and prefab emitter inher
 
 | Attribute     | Description |
 | ---               | --- |
-| bullet_adress         | stores the adress of the bullet scene this  emitter is using|
 | Bullet                | used to load and store bullet scene for quick instancing|
 | fire_rate             | fire rate of the emitter in seconds per bullet, ie: how many seconds between each shot fire. It makes it easier to write code and is easier to understand then bullets per second imo|
 | clip_size             | number of bullets fired before a reload is required| 
@@ -102,6 +195,9 @@ An abstract class for emitter that the editable emitter and prefab emitter inher
 | shot_timer            | timer to keep track of wait between shots|
 | reload_timer          | timer to keep track of wait between reload|
 | shot_count            | tracks number of shots fired,resets after reload|
+| bullet_adress         | stores the adress of the bullet scene this  emitter is using|
+| bullet_speed          | stores the speed of the bullet scene this  emitter is using|
+| bullet_lifespan       | stores the lifespan of the bullet scene this  emitter is using|
 
 ### methods:
 
@@ -124,7 +220,7 @@ virtual function of handling going out of bounds for emitter
 
 **aim(delta,player_position):**
 ```
-param:delta between frames, the position of the player
+param:delta between frames, the position of the player. Requres there to be a "Player" node for it to work
 return:none
 rotates the emitter to look at player when the aim referesh is off cooldown
 ```
@@ -159,6 +255,8 @@ Checks to see if the reload wait between shots has been completed
 
 **shoot():**
 ```
+param:none
+return:none
 for each array the function instances a volley of bullets and adjusts their position and rotaion accordingly
 ```
 
@@ -185,6 +283,8 @@ adjusts the starting angle of a volley of bullets according the array angle and 
 
 **clip_Managment():**
 ```
+param:none
+return:none
 checks to see if clip has been emptied; forces reload when needed
 ```
 
@@ -229,6 +329,8 @@ event triggered by signal when input occurs in area of emitter; used primaily to
 
 **_bound_Handler()**
 ```
+param:none
+return:none
 overriden function; clamps the emitter to the inside of the screen
 ```
 
@@ -250,6 +352,91 @@ return:none
 loads the emitter data when entering scene.
 ```
 
-
-
 ## Tab:
+| Attribute     | Description |
+| ---               | --- |
+| controler         | easy access to Main for updating the Emitter when a field is updated|
+
+### methods:
+
+**init(idx,emitter_name,position,fire_rate,volley_size,array_count):**
+```
+param:index of the tab which also serves as the name, starting position, starting fire rate, starting volley size, starting array count 
+return:none
+Initalizes the editor tab with default values of teh emitter.
+```
+
+**on_set_Param(value):**
+```
+SIGNAL EVENT FUNCTIONS
+param:none
+return:none
+this is a collective documentation for a set of functions that look like "on_set_name()","on_set_X()" etc.
+Functions triggered when a field in the tab is updated. They call the correspoding update function in controler. There is one for each editable param Abstract_Emitter
+```
+
+**on_LoadEmitter():**
+```
+SIGNAL EVENT FUNCTION
+param:none
+return:none
+pops up the Load Warning for the user so they are aware that unsaved changes will be lost
+```
+
+**on_acceptLoadWarning():**
+```
+SIGNAL EVENT FUNCTION
+param:none
+return:none
+pops up the file loading dialoug if the user accepts the warning
+```
+
+**on_loadSelected(path):**
+```
+SIGNAL EVENT FUNCTION
+param:path of emitter user wishes to load
+return:none
+calls the load_selected function with the path selected by the user on controler to load an existing emitter 
+```
+
+**on_LoadBullet():**
+```
+SIGNAL EVENT FUNCTION
+param:none
+return:none
+pops up the file loading dialoug
+```
+
+**on_bulletSelected(path):**
+```
+SIGNAL EVENT FUNCTION
+param:path of bullet user wishes to load
+return:none
+calls the update_Bullet function with the path selected by the user on controler to load an existing bullet
+```
+
+**on_SaveEmitter():**
+```
+SIGNAL EVENT FUNCTION
+param:none
+return:none
+pops up the file saving dialoug
+```
+
+**on_savePathSelected(path):**
+```
+SIGNAL EVENT FUNCTION
+param:path of bullet user wishes to load
+return:none
+calls the save_File function with the path selected by the user on controler to save the current emitter
+```
+
+**set_Param_field(value):**
+```
+FIELD UPDATE FUNCTIONS:
+param:new value of field
+return:none
+this is a collective documentation for a set of functions that look like "set_Name_field()","set_Position_field()" etc.
+Functions set the corresponding field to display the value provided. There is one for each editable param Abstract_Emitter. 
+For parameters that deal with angles these functions convert the angle to degrees for easier use.
+```
