@@ -19,71 +19,51 @@ func init(idx,emitter_name,position,fire_rate,volley_size,array_count,bullet_spe
 #_FIELD UPDATE SIGNAL EVENTS:
 #
 func on_set_Name(value):
-	print(value)
 	controler.update_Name(self,value)
 #_-position params
 func on_set_X(value):
-	print(value)
 	controler.update_PositionY(self,value)
 func on_set_Y(value):
-	print(value)
 	controler.update_PositionX(self,value)
 func on_set_Angle(value):
-	print(value)
 	controler.update_Angle(self,value)
 #_-firing params
 func on_set_FireRate(value):
-	print(value)
 	controler.update_FireRate(self,value)
 func on_set_ClipSize(value):
-	print(value)
 	controler.update_ClipSize(self,value)
 func on_set_ReloadTime(value):
-	print(value)
 	controler.update_ReloadTime(self,value)
 #_-rotation params
 func on_set_AngularVelocity(value):
-	print(value)
 	controler.update_AngularVelocity(self,value)
 func on_set_AngularAcceleration(value):
-	print(value)
 	controler.update_AngularAcceleration(self,value)
 func on_set_MaxAngularVelocity(value):
-	print(value)
 	controler.update_MaxAngularVelocity(self,value)
 #_-spread params
 func on_set_VolleySize(value):
-	print(value)
 	controler.update_VolleySize(self,value)
 func on_set_SpreadAngle(value):
-	print(value)
 	controler.update_SpreadAngle(self,value)
 func on_set_SpreadWidth(value):
-	print(value)
 	controler.update_SpreadWidth(self,value)
 #_-array params
 func on_set_ArrayCount(value):
-	print(value)
 	controler.update_ArrayCount(self,value)
 func on_set_ArrayAngle(value):
-	print(value)
 	controler.update_ArrayAngle(self,value)
 #_-aim params
 func on_set_AimEnabled(value):
-	print(value)
 	controler.update_AimEnabled(self,value)
 func on_set_AimPause(value):
-	print(value)
 	controler.update_AimPause(self,value)
 func on_set_AimOffset(value):
-	print(value)
 	controler.update_AimOffset(self,value)
 #_-bullet params
 func on_set_BulletSpeed(value):
-	print(value)
 	controler.update_BulletSpeed(self,value)
 func on_set_BulletLifespan(value):
-	print(value)
 	controler.update_BulletLifespan(self,value)
 
 #_BUTTON PRESS EVENTS:
