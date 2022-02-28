@@ -9,6 +9,6 @@ func _extra_behaviour(delta):
 func invert(delta):
 	ineversion_time+=delta
 	if(ineversion_time>=ineversion_trigger):
-		motion_vector +=-1
+		motion_vector = motion_vector*-1
 		ineversion_time = 0
 	return
