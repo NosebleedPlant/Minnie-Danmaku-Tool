@@ -143,6 +143,13 @@ return:none\n
 Called every frame. Calls move,age and collision detection functions.
 ```
 
+**_extra_behaviour(delta):**
+```
+param:delta between frames
+return:none
+virtual function for adding new behaviour to bullet when extending class
+```
+
 **move(delta):**
 ```
 param:delta between frames
