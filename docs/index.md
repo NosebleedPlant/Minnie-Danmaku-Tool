@@ -356,7 +356,7 @@ The version to of the emitter that is meant to be used in your actual game. It l
 ```
 param:none
 return:none
-loads the emitter data when entering scene.
+loads the emitter data when entering scene, *except* position data
 ```
 
 ## Tab:
