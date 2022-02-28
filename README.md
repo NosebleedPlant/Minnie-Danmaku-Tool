@@ -12,7 +12,8 @@ https://nosebleedplant.github.io/Minnie-Danmaku-Tool/
 
 ## **Getting Started:**
 
-To get started clone the repo or download the addon folder from here: [MinnieDanmaku.zip](https://github.com/NosebleedPlant/Minnie-Danmaku-Tool/files/8151652/MinnieDanmaku.zip)
+To get started clone the repo or download the addon folder from here: [MinnieDanmaku.zip](https://github.com/NosebleedPlant/Minnie-Danmaku-Tool/files/8152140/MinnieDanmaku.zip)
+
 
 If you clone the repo and work inside it then your good to go! congrats! Spit bullets to your hearts content
 However if you want to work in a different project then copy over the addons to the root of your project so that your file structre looks something like:
