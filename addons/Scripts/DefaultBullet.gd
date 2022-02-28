@@ -24,6 +24,7 @@ func init(pos,angle,speed,lifespan):
 
 #_MAIN:
 func _process(delta):
+	_extra_behaviour(delta)
 	move(delta)
 	if(bullet_life_span!=0):
 		age(delta)
@@ -31,6 +32,9 @@ func _process(delta):
 		collision_Detection(player_position)
 	return
 
+#_VIRTUAL FUNCTIONS:
+func _extra_behaviour(delta):
+	pass
 
 #_HELPER FUNCTIONS:
 #bullet movement

@@ -1,5 +1,6 @@
 extends Tabs
 
+var id = 0
 #_GLOBALS:
 onready var controler = get_tree().get_root().get_child(0)
 
@@ -18,51 +19,71 @@ func init(idx,emitter_name,position,fire_rate,volley_size,array_count,bullet_spe
 #_FIELD UPDATE SIGNAL EVENTS:
 #
 func on_set_Name(value):
+	print(value)
 	controler.update_Name(self,value)
 #_-position params
 func on_set_X(value):
+	print(value)
 	controler.update_PositionY(self,value)
 func on_set_Y(value):
+	print(value)
 	controler.update_PositionX(self,value)
 func on_set_Angle(value):
+	print(value)
 	controler.update_Angle(self,value)
 #_-firing params
 func on_set_FireRate(value):
+	print(value)
 	controler.update_FireRate(self,value)
 func on_set_ClipSize(value):
+	print(value)
 	controler.update_ClipSize(self,value)
 func on_set_ReloadTime(value):
+	print(value)
 	controler.update_ReloadTime(self,value)
 #_-rotation params
 func on_set_AngularVelocity(value):
+	print(value)
 	controler.update_AngularVelocity(self,value)
 func on_set_AngularAcceleration(value):
+	print(value)
 	controler.update_AngularAcceleration(self,value)
 func on_set_MaxAngularVelocity(value):
+	print(value)
 	controler.update_MaxAngularVelocity(self,value)
 #_-spread params
 func on_set_VolleySize(value):
+	print(value)
 	controler.update_VolleySize(self,value)
 func on_set_SpreadAngle(value):
+	print(value)
 	controler.update_SpreadAngle(self,value)
 func on_set_SpreadWidth(value):
+	print(value)
 	controler.update_SpreadWidth(self,value)
 #_-array params
 func on_set_ArrayCount(value):
+	print(value)
 	controler.update_ArrayCount(self,value)
 func on_set_ArrayAngle(value):
+	print(value)
 	controler.update_ArrayAngle(self,value)
 #_-aim params
 func on_set_AimEnabled(value):
+	print(value)
 	controler.update_AimEnabled(self,value)
 func on_set_AimPause(value):
+	print(value)
 	controler.update_AimPause(self,value)
 func on_set_AimOffset(value):
+	print(value)
 	controler.update_AimOffset(self,value)
 #_-bullet params
 func on_set_BulletSpeed(value):
+	print(value)
 	controler.update_BulletSpeed(self,value)
 func on_set_BulletLifespan(value):
+	print(value)
 	controler.update_BulletLifespan(self,value)
 
 #_BUTTON PRESS EVENTS:
@@ -109,46 +130,64 @@ func set_Name_field(value):
 	get_node("Menu/Name_Input").text = value
 #_-position params
 func set_Position_field(position):
+	print(position)
 	get_node("Menu/HBoxContainer3/X_Input").get_line_edit().text = str(position.x)
 	get_node("Menu/HBoxContainer4/Y_Input").get_line_edit().text = str(position.y)
+	get_node("Menu/HBoxContainer3/X_Input").apply()
+	get_node("Menu/HBoxContainer4/Y_Input").apply()
 func set_Angle_field(value):
 	get_node("Menu/Angle_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/Angle_Input").apply()
 #_-firing params
 func set_FireRate_field(value):
 	get_node("Menu/FireRate_Input").get_line_edit().text = str(value)
+	get_node("Menu/FireRate_Input").apply()
 func set_ClipSize_field(value):
 	get_node("Menu/ClipSize_Input").get_line_edit().text = str(value)
+	get_node("Menu/ClipSize_Input").apply()
 func set_ReloadTime_field(value):
 	get_node("Menu/ReloadTime_Input").get_line_edit().text = str(value)
+	get_node("Menu/ReloadTime_Input").apply()
 #_-rotation params
 func set_AngularVelocity_field(value):
 	get_node("Menu/AngularVelocity_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/AngularVelocity_Input").apply()
 func set_AngularAcceleration_field(value):
 	get_node("Menu/AngularAcceleration_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/AngularAcceleration_Input").apply()
 func set_MaxAngularVelocity_field(value):
 	get_node("Menu/MaxAngularVelocity_Input").get_line_edit().text = str(rad2deg(value))
-#_-spread params
+	get_node("Menu/MaxAngularVelocity_Input").apply()
+	#_-spread params
 func set_VolleySize_field(value):
 	get_node("Menu/VolleySize_Input").get_line_edit().text = str(value)
+	get_node("Menu/VolleySize_Input").apply()
 func set_SpreadAngle_field(value):
 	get_node("Menu/SpreadAngle_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/SpreadAngle_Input").apply()
 func set_SpreadWidth_field(value):
 	get_node("Menu/SpreadWidth_Input").get_line_edit().text = str(value)
+	get_node("Menu/SpreadWidth_Input").apply()
 #_-array params
 func set_ArrayCount_field(value):
 	get_node("Menu/ArrayCount_Input").get_line_edit().text = str(value)
+	get_node("Menu/ArrayCount_Input").apply()
 func set_ArrayAngle_field(value):
 	get_node("Menu/ArrayAngle_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/ArrayAngle_Input").apply()
 #_-aim params
 func set_AimEnabled_field(value):
 	get_node("Menu/AimEnabled_Input").pressed = value
 func set_AimPause_field(value):
 	get_node("Menu/AimPause_Input").get_line_edit().text = str(value)
+	get_node("Menu/AimPause_Input").apply()
 func set_AimOffset_field(value):
 	get_node("Menu/AimOffset_Input").get_line_edit().text = str(rad2deg(value))
+	get_node("Menu/AimOffset_Input").apply()
 #_-bullet params
 func set_BulletSpeed_field(value):
 	get_node("Menu/BulletSpeed_Input").get_line_edit().text = str(value)
+	get_node("Menu/BulletSpeed_Input").apply()
 func set_BulletLifespan_field(value):
 	get_node("Menu/BulletLifespan_Input").get_line_edit().text = str(rad2deg(value))
-
+	get_node("Menu/BulletLifespan_Input").apply()

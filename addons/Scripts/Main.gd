@@ -15,7 +15,7 @@ var repositioning_emitter = false							#indicates if repositioning
 var rotating_emitter = false								#indicates if adjusting rotate
 onready var player = find_node("Player")					#easy acess to player node
 onready var main_tree = get_tree()							#easy acess to scene tree
-onready var editor = find_node("UI").get_node("Editor")		#easy access to editor ui node
+onready var editor:TabContainer = find_node("UI").get_node("Editor")		#easy access to editor ui node
 var screen_size = OS.get_screen_size()
 
 #_INPUT BINDINGS:
@@ -37,6 +37,7 @@ func _unhandled_input(event):
 		rotating_emitter = false
 	if event.is_action_released(input_rotate):
 		rotating_emitter = false
+	return
 
 # calls adjustment functions when needed
 # warning-ignore:unused_argument
@@ -70,11 +71,11 @@ func spawn_Editior(emitter):
 		editor.set_visible(true)
 	tab = _Tab.instance()
 	editor.add_child(tab)
-	tab.init(emitter_count,emitter.get_name(),emitter.get_position(),
-			emitter.get_fire_rate(),emitter.get_volley_size(),emitter.get_array_count(),
-			emitter.get_bullet_speed(),emitter.get_bullet_lifespan())
 	tab_emitter_map[tab] = emitter#adds emitter and tab pair to map
 	emitter_tab_map[emitter] = tab#adds tab and emitter pair to map
+	tab.init(tab_count,emitter.get_name(),emitter.get_position(),
+			emitter.get_fire_rate(),emitter.get_volley_size(),emitter.get_array_count(),
+			emitter.get_bullet_speed(),emitter.get_bullet_lifespan())
 	editor.current_tab = tab_count#sets editor to the page of the new tab
 	tab_count+=1
 	return tab
@@ -109,6 +110,7 @@ func adjustment_Input(emitter,event):
 		if Input.is_action_pressed(input_rotate):
 			repositioning_emitter = false
 			rotating_emitter = true
+	return
 
 #_UPDATE MODEL:
 #
@@ -130,7 +132,7 @@ func update_ReloadTime(tab,value):
 	tab_emitter_map[tab].set_reload_time(value)
 #_-rotation params
 func update_AngularVelocity(tab,value):
-	tab_emitter_map[tab].set_angular_veloctiy(value)
+	tab_emitter_map[tab].set_angular_velocity(value)
 func update_AngularAcceleration(tab,value):
 	tab_emitter_map[tab].set_angular_acceleration(value)
 func update_MaxAngularVelocity(tab,value):
@@ -180,7 +182,7 @@ func load_Selected(tab,path):
 	tab.set_ReloadTime_field(emitter.get_reload_time())
 	
 	#_-rotation params
-	tab.set_AngularVelocity_field(emitter.get_angular_veloctiy())
+	tab.set_AngularVelocity_field(emitter.get_angular_velocity())
 	tab.set_AngularAcceleration_field(emitter.get_angular_acceleration())
 	tab.set_MaxAngularVelocity_field(emitter.get_max_angular_velocity())
 	
@@ -199,8 +201,8 @@ func load_Selected(tab,path):
 	tab.set_AimOffset_field(emitter.get_aim_offset())
 	
 	#_-bullet params
-	tab.set_AimEnabled_field(emitter.get_bullet_speed())
-	tab.set_AimPause_field(emitter.get_bullet_lifespan())
+	tab.set_BulletSpeed_field(emitter.get_bullet_speed())
+	tab.set_BulletLifespan_field(emitter.get_bullet_lifespan())
 	
 	return
 
@@ -216,6 +218,5 @@ func save_File(tab,path):
 #return: null
 func delete_Emitter(tab):
 	tab_emitter_map[tab].queue_free()
-	tab.queue_free()
-	tab_count-=1
+	editor.set_tab_hidden(int(tab.name),true)
 	return

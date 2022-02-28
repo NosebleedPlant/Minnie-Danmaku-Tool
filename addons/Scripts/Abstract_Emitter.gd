@@ -9,9 +9,9 @@ var fire_rate = 0.2					#cooldown between shots
 var clip_size = 0					#shots before reload required
 var reload_time = 0					#time it takes to roload
 #_-rotation params
-var angular_veloctiy = 0			#rate of eimiter rotaiotn in radians/frame
+var angular_velocity = 0			#rate of eimiter rotaiotn in radians/frame
 var angular_acceleration = 0		#rate at which the rotation speed changes
-var max_angular_velocity = 0		#upper limit to rotation speed after which it flips
+var max_angular_velocity = 0			#upper limit to rotation angle after which it flips
 #_-spread params
 var volley_size = 1					#bulletcount in a single volley
 var spread_angle=0					#spread angle between bullets
@@ -81,7 +81,7 @@ func aim(delta,player_position):
 #param:delta(time between frames)
 #return: null
 func rotate(delta):
-	if(angular_veloctiy!=0):
+	if!(angular_velocity==0&&angular_acceleration==0):
 		self.rotation += accelerate_Rotation(delta)
 		if(self.rotation_degrees >= 360 or self.rotation_degrees <= -360):
 			self.rotation_degrees = 0
@@ -91,10 +91,10 @@ func rotate(delta):
 #param:delta(time between frames)
 #return: updated angular velocity
 func accelerate_Rotation(delta):
-	angular_veloctiy += angular_acceleration*delta
-	if(abs(angular_veloctiy)>abs(max_angular_velocity)):
+	angular_velocity += angular_acceleration*delta
+	if(abs(angular_velocity)>abs(max_angular_velocity)&&(max_angular_velocity!=0)):
 		angular_acceleration*=-1
-	return angular_veloctiy
+	return angular_velocity
 
 #checks to see if wait between shots has been completed
 #param:delta(time between frames)
@@ -196,7 +196,7 @@ func load_Emitter(file_name):
 		reload_time = file.get_var()
 		
 		#_-rotation params
-		angular_veloctiy = file.get_var()
+		angular_velocity = file.get_var()
 		angular_acceleration = file.get_var()
 		max_angular_velocity = file.get_var()
 		
@@ -247,8 +247,8 @@ func set_clip_size(value):
 func set_reload_time(value):
 	reload_time = value
 #_-rotation params
-func set_angular_veloctiy(value):
-	angular_veloctiy = deg2rad(value)
+func set_angular_velocity(value):
+	angular_velocity = deg2rad(value)
 func set_angular_acceleration(value):
 	angular_acceleration = deg2rad(value)
 func set_max_angular_velocity(value):
@@ -296,8 +296,8 @@ func get_clip_size():
 func get_reload_time():
 	return reload_time
 #_-rotation params
-func get_angular_veloctiy():
-	return angular_veloctiy
+func get_angular_velocity():
+	return angular_velocity
 func get_angular_acceleration():
 	return angular_acceleration
 func get_max_angular_velocity():

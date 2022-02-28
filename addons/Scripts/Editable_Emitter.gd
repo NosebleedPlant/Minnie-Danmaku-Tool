@@ -32,7 +32,7 @@ func save(file_path):
 	file.store_var(clip_size)
 	file.store_var(reload_time)
 	#_-rotation params
-	file.store_var(angular_veloctiy)
+	file.store_var(angular_velocity)
 	file.store_var(angular_acceleration)
 	file.store_var(max_angular_velocity)
 
