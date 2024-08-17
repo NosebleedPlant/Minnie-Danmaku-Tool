@@ -1,5 +1,7 @@
-# Minnie-Danmaku-Tool
-
+# Minnie-Danmaku-Tool [ARCHIVED]
+## **Note From Author:**
+Hey, so this is a pretty horrible project in retrospect but it was good for helping explore godot when I had first started using this. Please dont repleacte this or use it, there are some good ideas but overall garbage implementation. Maybe someday ill work on a v2
+-Yarrow
 ## **Description:**
 
 A bullethell pattern making tool for the godot game engine. It is NOT intended to be a code free solution to making bullethells(tho u can get pretty far with it imo). Its intended to be a tool that beginners can easily extend and adjust to their needs with basic knowledge of programming and allow designers to rapidly prototype bullethell patterns that they can then drop into levels for testing. The tool does not aim to include the ability to design movement patterns for the emitters or design generators for now in the interset of keeping the scope manageable for a 1-person project.This tool is not a proper godot "tool" in that it modifies the editor but I belive this makes it a bit more approachable for bigginer devs to modify and adjust to their needs.
